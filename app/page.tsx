@@ -2,6 +2,7 @@ import { MarraiHero } from "@/components/marketing/marrai-hero";
 import { FinalCtaSection } from "@/components/marketing/final-cta-section";
 import { HowItWorksSection } from "@/components/marketing/how-it-works-section";
 import { ProblemSection } from "@/components/marketing/problem-section";
+import { ResearchPreviewSection } from "@/components/marketing/research-preview-section";
 import { SignalsSection } from "@/components/marketing/signals-section";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <ProblemSection />
       <HowItWorksSection />
       <SignalsSection />
+      <ResearchPreviewSection />
       <FinalCtaSection />
     </main>
   );
