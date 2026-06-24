@@ -7,6 +7,7 @@ import {
   auditStatusMessages,
 } from "@/features/audit/hooks";
 import { auditPollResponseSchema } from "@/features/audit/schemas";
+import { ReportShell } from "@/components/report/report-shell";
 
 import { AuditErrorState } from "./audit-error-state";
 import { AuditProgressSteps } from "./audit-progress-steps";
@@ -124,6 +125,10 @@ export function AuditStatusPanel({ jobId }: AuditStatusPanelProps) {
 
   const statusMessage = auditStatusMessages[data.status];
 
+  if (data.status === "success" && data.result) {
+    return <ReportShell report={data.result as Record<string, unknown>} status={data.status} />;
+  }
+
   return (
     <div className="w-full max-w-3xl rounded-[2rem] border border-slate-900/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.92)_0%,rgba(247,249,244,0.98)_100%)] p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8 lg:p-10">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -188,17 +193,11 @@ export function AuditStatusPanel({ jobId }: AuditStatusPanelProps) {
         </div>
       </div>
 
-      {data.status === "success" ? (
-        <div className="mt-8 rounded-3xl border border-slate-900/10 bg-white/75 p-6 text-slate-700">
-          Report data is ready. The report UI will render here next.
-        </div>
-      ) : (
-        <div className="mt-8 rounded-3xl border border-slate-900/10 bg-white/75 p-6 text-sm leading-7 text-slate-600">
-          {data.status === "failure"
-            ? "The audit completed with an error. You can start a new audit from the homepage."
-            : "This page updates automatically every few seconds until the audit finishes."}
-        </div>
-      )}
+      <div className="mt-8 rounded-3xl border border-slate-900/10 bg-white/75 p-6 text-sm leading-7 text-slate-600">
+        {data.status === "failure"
+          ? "The audit completed with an error. You can start a new audit from the homepage."
+          : "This page updates automatically every few seconds until the audit finishes."}
+      </div>
     </div>
   );
 }
