@@ -1,36 +1,236 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Marrai Web
+
+Marrai Web is the frontend for Marrai, an AI visibility and Answer Engine Optimization (AEO) audit product.
+
+It lets users run a free website audit, track audit progress, and view a structured report showing how well AI answer engines can understand, retrieve, and cite their website.
+
+## What is Marrai?
+
+Search is moving from keyword results to answer-driven discovery. AI systems now summarize, compare, recommend, and cite websites directly inside answer interfaces.
+
+Marrai helps website owners understand whether their site is readable and useful to those systems by checking:
+
+* Metadata
+* Structured data
+* Content quality
+* Internal connectivity
+* Technical compliance
+* Semantic clarity
+
+## Features
+
+* Premium marketing homepage
+* Free AEO audit submission flow
+* URL and optional email capture
+* API proxy routes for backend communication
+* Audit status polling
+* Report-ready state handling
+* AI visibility report UI
+* Page-level audit breakdown
+* Responsive design
+* Basic SEO metadata
+* Frontend CI with GitHub Actions
+
+## Tech Stack
+
+* Next.js App Router
+* React
+* TypeScript
+* Tailwind CSS
+* Zod
+* shadcn-style UI primitives
+* lucide-react
+* pnpm
+* GitHub Actions
+* Vercel-ready deployment
+
+## Project Structure
+
+```txt
+marrai-web/
+├── app/
+│   ├── api/
+│   │   └── audit/
+│   ├── audit/
+│   │   └── [jobId]/
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── audit/
+│   ├── marketing/
+│   ├── report/
+│   └── ui/
+├── features/
+│   └── audit/
+├── lib/
+├── public/
+├── .env.example
+├── package.json
+└── README.md
+```
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/whyismeleige/marrai-web.git
+cd marrai-web
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Create environment file
 
-## Learn More
+Create a local environment file:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+cp .env.example .env.local
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For local development:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+```
 
-## Deploy on Vercel
+## Running Locally
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Start the development server:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm dev
+```
+
+Open:
+
+```txt
+http://localhost:3000
+```
+
+## Available Scripts
+
+```bash
+pnpm dev
+```
+
+Runs the local development server.
+
+```bash
+pnpm build
+```
+
+Builds the production application.
+
+```bash
+pnpm start
+```
+
+Runs the production build locally.
+
+```bash
+pnpm lint
+```
+
+Runs ESLint.
+
+```bash
+pnpm typecheck
+```
+
+Runs TypeScript checks.
+
+```bash
+pnpm check
+```
+
+Runs linting, type checking, and production build checks.
+
+## Backend Connection
+
+The frontend does not call the FastAPI backend directly from the browser. Instead, it uses Next.js API routes as a proxy.
+
+Frontend routes:
+
+```txt
+POST /api/audit
+GET  /api/audit/[jobId]
+```
+
+Backend routes called by the proxy:
+
+```txt
+POST /api/v1/audit
+GET  /api/v1/audit/{jobId}
+```
+
+This keeps frontend code cleaner and gives the app a single place to normalize backend errors.
+
+## Audit Flow
+
+```txt
+1. User enters a website URL on /audit
+2. Frontend sends request to POST /api/audit
+3. Next.js API route forwards request to FastAPI backend
+4. Backend creates an audit job
+5. Frontend redirects to /audit/[jobId]
+6. Frontend polls audit status
+7. When the job succeeds, the report UI renders the result
+```
+
+## Main Pages
+
+```txt
+/               Marketing homepage
+/audit          Free audit submission page
+/audit/[jobId]  Audit status and report page
+```
+
+## CI
+
+This repository uses GitHub Actions for frontend checks.
+
+The CI workflow runs on pushes and pull requests to `main` and checks:
+
+* dependency installation
+* linting
+* TypeScript
+* production build
+
+## Development Workflow
+
+Recommended branch flow:
+
+```txt
+main = stable production branch
+feature branches = individual changes
+```
+
+Example:
+
+```bash
+git checkout -b feat/audit-report-polish
+pnpm check
+git add .
+git commit -m "feat(report): polish audit report layout"
+git push origin feat/audit-report-polish
+```
+
+Then open a pull request into `main`.
+
+## Related Repository
+
+Backend API:
+
+```txt
+https://github.com/whyismeleige/marrai-backend
+```
+
+## Status
+
+Marrai Web is currently in MVP development.
