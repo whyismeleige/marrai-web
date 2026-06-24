@@ -154,7 +154,7 @@ export function AuditForm() {
               aria-invalid={form.formState.errors.email ? "true" : "false"}
             />
             <p className="mt-2 text-sm text-slate-500">
-              Optional, if you want the report link emailed to you.
+              Required so Marrai can send you the report link.
             </p>
             <FieldError message={form.formState.errors.email?.message} />
           </div>

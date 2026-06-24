@@ -10,7 +10,7 @@ const flexibleDateTimeSchema = z.string().min(1);
 
 export const auditSubmitRequestSchema = z.object({
   url: z.string().url(),
-  email: z.string().email().optional(),
+  email: z.string().email(),
 });
 
 export const auditSubmitResponseSchema = z.object({

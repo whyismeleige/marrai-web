@@ -2,14 +2,13 @@ import { z } from "zod";
 
 import { auditSubmitResponseSchema } from "./schemas";
 
-const optionalEmailSchema = z.preprocess((value) => {
+const emailSchema = z.preprocess((value) => {
   if (typeof value !== "string") {
     return value;
   }
 
-  const trimmed = value.trim();
-  return trimmed === "" ? undefined : trimmed;
-}, z.string().email("Enter a valid email address.").optional());
+  return value.trim();
+}, z.string().min(1, "Enter your email address.").email("Enter a valid email address."));
 
 export const auditFormSchema = z.object({
   url: z
@@ -17,7 +16,7 @@ export const auditFormSchema = z.object({
     .trim()
     .min(1, "Enter a website URL.")
     .url("Enter a valid website URL."),
-  email: optionalEmailSchema,
+  email: emailSchema,
 });
 
 export const auditProxySuccessSchema = z.object({
