@@ -1,3 +1,5 @@
+import type { AuditReportResult } from "@/features/audit/schemas";
+
 import { ReportHeader } from "./report-header";
 import { ScoreSummary } from "./score-summary";
 import { CategoryScoreGrid } from "./category-score-grid";
@@ -7,7 +9,7 @@ import { UnreachablePagesSection } from "./unreachable-pages-section";
 import { ReportCta } from "./report-cta";
 
 type ReportShellProps = {
-  report: Record<string, unknown>;
+  report: AuditReportResult;
   status: string;
 };
 

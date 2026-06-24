@@ -1,5 +1,7 @@
+import type { AuditReportResult } from "@/features/audit/schemas";
+
 type ScoreSummaryProps = {
-  report: Record<string, unknown>;
+  report: AuditReportResult;
 };
 
 function scoreValue(value: unknown) {

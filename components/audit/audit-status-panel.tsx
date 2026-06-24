@@ -126,7 +126,7 @@ export function AuditStatusPanel({ jobId }: AuditStatusPanelProps) {
   const statusMessage = auditStatusMessages[data.status];
 
   if (data.status === "success" && data.result) {
-    return <ReportShell report={data.result as Record<string, unknown>} status={data.status} />;
+    return <ReportShell report={data.result} status={data.status} />;
   }
 
   return (

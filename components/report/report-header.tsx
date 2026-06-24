@@ -1,5 +1,7 @@
 import { CheckCircle2, Clock3, Globe2 } from "lucide-react";
 
+import type { AuditReportResult } from "@/features/audit/schemas";
+
 function formatNumber(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) ? value : "—";
 }
@@ -13,7 +15,7 @@ function formatDuration(value: unknown) {
 }
 
 type ReportHeaderProps = {
-  report: Record<string, unknown>;
+  report: AuditReportResult;
   status: string;
 };
 

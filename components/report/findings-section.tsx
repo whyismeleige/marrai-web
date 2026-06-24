@@ -1,5 +1,7 @@
+import type { AuditReportResult } from "@/features/audit/schemas";
+
 type FindingsSectionProps = {
-  report: Record<string, unknown>;
+  report: AuditReportResult;
 };
 
 function normalizeItems(value: unknown): string[] {

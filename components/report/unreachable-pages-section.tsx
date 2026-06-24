@@ -1,5 +1,7 @@
+import type { AuditReportResult } from "@/features/audit/schemas";
+
 type UnreachablePagesSectionProps = {
-  report: Record<string, unknown>;
+  report: AuditReportResult;
 };
 
 function normalizeUnreachablePages(value: unknown) {
