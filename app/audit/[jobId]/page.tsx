@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
+
 import { AuditPageShell } from "@/components/audit/audit-page-shell";
 import { AuditErrorState } from "@/components/audit/audit-error-state";
 import { AuditStatusPanel } from "@/components/audit/audit-status-panel";
 import { auditJobIdSchema } from "@/features/audit/hooks";
+
+export const metadata: Metadata = {
+  title: "Audit Report",
+  description:
+    "View your Marrai AI visibility audit status and report.",
+};
 
 type AuditJobPageProps = {
   params: Promise<{ jobId: string }>;
