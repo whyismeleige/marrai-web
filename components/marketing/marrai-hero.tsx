@@ -16,9 +16,6 @@ export function MarraiHero() {
         <MarraiNavbar />
 
         <div className="relative z-10 mx-auto flex flex-1 w-full max-w-5xl flex-col items-center justify-center px-5 pb-16 pt-8 text-center sm:pb-20 sm:pt-10 lg:pb-24 lg:pt-12">
-          <div className="animate-fade-up mb-5 rounded-full bg-white/50 px-3 py-1 text-[11px] font-medium tracking-wide text-slate-700 ring-1 ring-slate-900/10 backdrop-blur-md">
-            AI visibility audit
-          </div>
 
           <h1 className="max-w-[920px] text-[48px] font-normal leading-[0.95] tracking-[-0.045em] text-slate-950 [text-wrap:balance] min-[400px]:text-[56px] sm:text-7xl lg:text-[92px] xl:text-[104px]">
             <span className="animate-fade-up block">Be understood.</span>

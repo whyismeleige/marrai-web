@@ -24,9 +24,6 @@ export function ProblemSection() {
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-10 lg:py-32">
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-12">
           <div className="max-w-xl">
-            <div className="inline-flex rounded-full bg-white/70 px-3 py-1 text-[11px] font-medium tracking-wide text-slate-700 ring-1 ring-slate-900/10">
-              THE SHIFT
-            </div>
             <h2 className="mt-5 text-3xl font-normal tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl">
               Search is becoming answer-driven.
             </h2>
@@ -65,12 +62,7 @@ export function ProblemSection() {
           </div>
         </div>
 
-        <div className="mt-10 flex items-center gap-2 text-sm text-slate-600">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/60 px-3 py-1 ring-1 ring-slate-900/10">
-            <ArrowRight className="h-3.5 w-3.5 text-slate-500" />
-            Visibility now depends on retrievability
-          </span>
-        </div>
+        <div className="mt-10 flex items-center gap-2 text-sm text-slate-600"></div>
       </div>
     </section>
   );
