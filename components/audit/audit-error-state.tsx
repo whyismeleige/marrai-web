@@ -1,4 +1,4 @@
-import { AlertTriangle, ArrowLeft } from "lucide-react";
+import { AlertTriangle, ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 type AuditErrorStateProps = {
@@ -16,13 +16,21 @@ export function AuditErrorState({ title, message }: AuditErrorStateProps) {
         {title}
       </h1>
       <p className="mt-4 text-base leading-7 text-slate-600">{message}</p>
-      <div className="mt-8">
+
+      <div className="mt-8 flex flex-wrap items-center gap-3">
         <Link
           href="/audit"
           className="inline-flex items-center rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-800"
         >
+          Try another audit
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Link>
+        <Link
+          href="/"
+          className="inline-flex items-center rounded-full px-6 py-3 text-sm font-medium text-slate-700 ring-1 ring-slate-900/10 transition-colors hover:bg-white/70"
+        >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to audit
+          Back to home
         </Link>
       </div>
     </div>
