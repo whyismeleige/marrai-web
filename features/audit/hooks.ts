@@ -41,5 +41,39 @@ export const auditProxyResponseSchema = z.union([
   auditProxyErrorSchema,
 ]);
 
+export const auditJobIdSchema = z.string().uuid("Enter a valid job ID.");
+
 export type AuditFormValues = z.infer<typeof auditFormSchema>;
 export type AuditProxyResponse = z.infer<typeof auditProxyResponseSchema>;
+
+export const auditStatusMessages = {
+  pending: "Preparing your audit",
+  started: "Starting crawler",
+  crawling: "Crawling your website",
+  scoring: "Scoring AI visibility",
+  success: "Your report is ready",
+  failure: "The audit could not be completed",
+} as const;
+
+export const auditProgressSteps = [
+  {
+    id: "submitted",
+    label: "Submitted",
+    statuses: ["pending", "started"] as const,
+  },
+  {
+    id: "crawling",
+    label: "Crawling",
+    statuses: ["crawling"] as const,
+  },
+  {
+    id: "scoring",
+    label: "Scoring",
+    statuses: ["scoring"] as const,
+  },
+  {
+    id: "ready",
+    label: "Report ready",
+    statuses: ["success", "failure"] as const,
+  },
+] as const;
