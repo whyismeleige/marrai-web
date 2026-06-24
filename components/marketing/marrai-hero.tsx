@@ -5,7 +5,7 @@ import { MarraiNavbar } from "./marrai-navbar";
 
 export function MarraiHero() {
   return (
-    <main className="relative min-h-[100svh] overflow-hidden bg-[#CFEAF8]">
+    <section className="relative min-h-[100svh] overflow-hidden bg-[#CFEAF8]">
       <section className="relative flex min-h-[100svh] flex-col">
         <div className="absolute inset-0 bg-[linear-gradient(180deg,#CFEAF8_0%,#EEF5F1_48%,#E9F2E7_78%,#DCEED7_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.64),transparent_34%),radial-gradient(circle_at_82%_16%,rgba(186,219,241,0.34),transparent_30%),radial-gradient(circle_at_50%_74%,rgba(124,174,102,0.14),transparent_34%),radial-gradient(circle_at_50%_104%,rgba(98,148,78,0.26),transparent_28%)]" />
@@ -67,6 +67,6 @@ export function MarraiHero() {
           </div>
         </div>
       </section>
-    </main>
+    </section>
   );
 }
