@@ -20,12 +20,12 @@ const signals = [
   },
   {
     title: "Content Quality",
-    text: "Word count, heading hierarchy, and body-text diversity.",
+    text: "Word count, heading hierarchy, and body-text depth.",
     icon: SplitSquareVertical,
   },
   {
     title: "Internal Connectivity",
-    text: "Internal links that help crawlers discover important pages.",
+    text: "Internal links that help crawlers discover priority pages.",
     icon: Link2,
   },
   {
@@ -55,7 +55,7 @@ export function SignalsSection() {
             What Marrai checks.
           </h2>
           <p className="mt-5 text-base leading-7 text-slate-600 sm:text-lg">
-            The free audit looks at the signals that help AI answer engines
+            The free audit looks at the signals that help answer engines
             understand, retrieve, and cite your site.
           </p>
         </div>

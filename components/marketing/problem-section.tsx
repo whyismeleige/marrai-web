@@ -3,17 +3,17 @@ import { ArrowRight, FileText, Link2, Search } from "lucide-react";
 const cards = [
   {
     title: "AI systems choose what gets cited",
-    text: "Your pages need to be clear, structured, and retrievable.",
+    text: "Your pages need to be clear, structured, and easy to retrieve.",
     icon: Search,
   },
   {
     title: "Machine readability is now a growth signal",
-    text: "Metadata, schema, headings, and internal links shape how AI systems understand your site.",
+    text: "Metadata, schema, headings, and internal links shape how answer engines interpret your site.",
     icon: Link2,
   },
   {
     title: "Generic SEO reports miss the AI layer",
-    text: "Marrai audits deterministic signals and semantic clarity together.",
+    text: "Marrai audits deterministic signals and semantic clarity together in one report.",
     icon: FileText,
   },
 ];
@@ -31,8 +31,8 @@ export function ProblemSection() {
               Search is becoming answer-driven.
             </h2>
             <p className="mt-5 max-w-lg text-base leading-7 text-slate-600 sm:text-lg">
-              Ranking is no longer the only surface that matters. AI answer
-              engines summarize, compare, and cite brands before a user ever
+              Ranking is no longer the only surface that matters. Discovery now
+              includes summaries, comparisons, and citations before a user ever
               clicks.
             </p>
           </div>

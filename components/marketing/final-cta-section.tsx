@@ -10,21 +10,21 @@ export function FinalCtaSection() {
               Run your first AI visibility audit.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
-              Enter your website URL and get a free report showing how AI
-              answer engines understand your site.
+              Enter your website URL and get a free report showing how Marrai
+              evaluates your site.
             </p>
           </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
               href="/audit"
-              className="inline-flex items-center justify-center rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-800"
+              className="inline-flex items-center justify-center rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-800 hover:shadow-lg"
             >
               Start free audit
             </Link>
             <Link
               href="#sample-report"
-              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-medium text-slate-700 ring-1 ring-slate-900/10 transition-colors hover:bg-slate-50"
+              className="inline-flex items-center justify-center rounded-full bg-white/70 px-6 py-3 text-sm font-medium text-slate-700 ring-1 ring-slate-900/10 transition-colors hover:bg-white"
             >
               View sample report
             </Link>

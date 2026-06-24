@@ -22,13 +22,13 @@ const steps = [
   {
     number: "03",
     title: "Score",
-    text: "It scores deterministic AEO signals and semantic clarity.",
+    text: "It scores the signals that shape answer-engine visibility and clarity.",
     icon: BarChart3,
   },
   {
     number: "04",
     title: "Recommend",
-    text: "It returns practical findings and recommendations.",
+    text: "It returns practical findings and clear next steps.",
     icon: Sparkles,
   },
 ];
@@ -46,7 +46,7 @@ export function HowItWorksSection() {
           </h2>
           <p className="mt-5 text-base leading-7 text-slate-600 sm:text-lg">
             Marrai turns a crawl into a practical report your team can use to
-            improve AI visibility.
+            improve visibility across answer engines.
           </p>
         </div>
 

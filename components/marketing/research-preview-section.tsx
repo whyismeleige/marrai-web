@@ -39,8 +39,8 @@ export function ResearchPreviewSection() {
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
               Marrai’s research library will cover AEO, AI search, citation
-              intelligence, structured data, and content strategy for the
-              answer-engine era.
+              intelligence, structured data, and content strategy for this new
+              discovery layer.
             </p>
           </div>
 
