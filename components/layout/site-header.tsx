@@ -3,14 +3,14 @@ import Link from "next/link";
 import { Container } from "./container";
 
 const navItems = [
-  { href: "/audit", label: "Audit" },
-  { href: "/blog", label: "Blog" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "#free-audit", label: "Audit" },
+  { href: "#research", label: "Research" },
+  { href: "#final-cta", label: "Next step" },
 ];
 
 function SiteHeader() {
   return (
-    <header className="border-b border-border/70 bg-background">
+    <header className="border-b border-border/70 bg-background/95">
       <Container className="flex h-16 items-center justify-between gap-6">
         <Link
           href="/"
