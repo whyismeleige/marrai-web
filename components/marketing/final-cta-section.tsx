@@ -12,9 +12,6 @@ export function FinalCtaSection() {
 
             <div className="relative grid gap-8 lg:grid-cols-[0.9fr_1fr] lg:items-center lg:gap-12">
               <div className="max-w-2xl">
-                <div className="inline-flex rounded-full bg-white/70 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-slate-600 ring-1 ring-slate-900/10">
-                  Start here
-                </div>
                 <h2 className="mt-5 text-3xl font-normal tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl">
                   Run your first AI visibility audit.
                 </h2>

@@ -29,9 +29,6 @@ export function ProblemSection() {
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-10 lg:py-32">
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-12">
           <Reveal className="max-w-xl">
-            <div className="inline-flex rounded-full bg-white/60 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-slate-600 ring-1 ring-slate-900/10">
-              The shift
-            </div>
             <h2 className="mt-5 text-3xl font-normal tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl">
               Search is becoming answer-driven.
             </h2>
@@ -47,17 +44,14 @@ export function ProblemSection() {
               const Icon = card.icon;
 
               return (
-                <Reveal
-                  key={card.title}
-                  delayMs={index * 90}
-                >
+                <Reveal key={card.title} delayMs={index * 90}>
                   <article className="group rounded-3xl border border-slate-900/10 bg-white/75 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.04)] backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#4C9A6A]/25 hover:shadow-[0_18px_46px_rgba(15,23,42,0.08)]">
                     <div className="flex items-start gap-4">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#4C9A6A]/10 text-[#4C9A6A] ring-1 ring-[#4C9A6A]/12 transition-colors group-hover:bg-[#4C9A6A]/15">
                         <Icon className="h-5 w-5" />
                       </div>
                       <div>
-                        <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
+                        <span className="text-[11px] font-medium tracking-[0.18em] text-slate-500 uppercase">
                           {card.label}
                         </span>
                         <h3 className="mt-2 text-base font-medium text-slate-950">

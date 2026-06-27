@@ -62,9 +62,6 @@ export function SignalsSection() {
     >
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-10 lg:py-32">
         <Reveal className="max-w-2xl">
-          <div className="inline-flex rounded-full bg-white/60 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-slate-600 ring-1 ring-slate-900/10">
-            Audit signals
-          </div>
           <h2 className="mt-5 text-3xl font-normal tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl">
             What Marrai checks.
           </h2>

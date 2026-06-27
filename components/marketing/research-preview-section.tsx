@@ -32,9 +32,6 @@ export function ResearchPreviewSection() {
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-10 lg:py-32">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <Reveal className="max-w-2xl">
-            <div className="inline-flex rounded-full bg-white/60 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-slate-600 ring-1 ring-slate-900/10">
-              Why it matters
-            </div>
             <h2 className="mt-5 text-3xl font-normal tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl">
               Built for the layer after SEO.
             </h2>

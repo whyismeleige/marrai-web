@@ -30,9 +30,6 @@ export function SiteFooter() {
                   <Link className="transition-colors hover:text-slate-950" href="/audit">
                     Free audit
                   </Link>
-                  <Link className="transition-colors hover:text-slate-950" href="#checks">
-                    What we check
-                  </Link>
                 </div>
               </div>
 
