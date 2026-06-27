@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { auditSubmitResponseSchema } from "./schemas";
+import { normalizeAuditUrl } from "./url";
 
 const emailSchema = z.preprocess((value) => {
   if (typeof value !== "string") {
@@ -15,7 +16,9 @@ export const auditFormSchema = z.object({
     .string()
     .trim()
     .min(1, "Enter a website URL.")
-    .url("Enter a valid website URL."),
+    .refine((value) => normalizeAuditUrl(value) !== null, {
+      message: "Enter a valid website URL.",
+    }),
   email: emailSchema,
 });
 

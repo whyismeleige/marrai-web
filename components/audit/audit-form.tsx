@@ -12,10 +12,15 @@ import {
   auditFormSchema,
   type AuditFormValues,
 } from "@/features/audit/hooks";
+import { normalizeAuditUrl } from "@/features/audit/url";
 import { cn } from "@/lib/utils";
 
 type FieldErrorProps = {
   message?: string;
+};
+
+type AuditFormProps = {
+  initialUrl?: string;
 };
 
 function FieldError({ message }: FieldErrorProps) {
@@ -30,14 +35,14 @@ const auditFormResolver = (
   zodResolver as unknown as (schema: typeof auditFormSchema) => Resolver<AuditFormValues>
 )(auditFormSchema);
 
-export function AuditForm() {
+export function AuditForm({ initialUrl }: AuditFormProps) {
   const router = useRouter();
   const [rootError, setRootError] = useState<string | null>(null);
 
   const form = useForm<AuditFormValues>({
     resolver: auditFormResolver,
     defaultValues: {
-      url: "",
+      url: initialUrl ?? "",
       email: "",
     },
     mode: "onSubmit",
@@ -46,12 +51,25 @@ export function AuditForm() {
   const onSubmit = form.handleSubmit(async (values) => {
     setRootError(null);
 
+    const normalizedUrl = normalizeAuditUrl(values.url);
+
+    if (!normalizedUrl) {
+      form.setError("url", {
+        type: "validate",
+        message: "Enter a valid website URL.",
+      });
+      return;
+    }
+
     const response = await fetch("/api/audit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(values),
+      body: JSON.stringify({
+        ...values,
+        url: normalizedUrl,
+      }),
     }).catch(() => null);
 
     if (!response) {
@@ -114,7 +132,7 @@ export function AuditForm() {
             </label>
             <input
               id="audit-url"
-              type="url"
+              type="text"
               inputMode="url"
               autoComplete="url"
               placeholder="https://example.com"
