@@ -1,6 +1,7 @@
 import {
   ArrowRight,
   BarChart3,
+  CheckCircle2,
   FileText,
   Link2,
   ScanSearch,
@@ -9,15 +10,10 @@ import {
 import { cn } from "@/lib/utils";
 
 const metrics = [
-  {
-    label: "Overall score",
-    value: "84",
-    tone: "bg-[#4C9A6A]",
-  },
-  { label: "Metadata", value: "92", tone: "bg-[#6BAC7C]" },
-  { label: "Schema", value: "78", tone: "bg-[#89B89A]" },
-  { label: "Semantic clarity", value: "88", tone: "bg-[#A8CFAE]" },
-  { label: "Internal links", value: "81", tone: "bg-[#B7DDC0]" },
+  { label: "Metadata", value: "92", width: "w-[92%]" },
+  { label: "Schema", value: "78", width: "w-[78%]" },
+  { label: "Semantic clarity", value: "88", width: "w-[88%]" },
+  { label: "Internal links", value: "81", width: "w-[81%]" },
 ];
 
 const pipeline = [
@@ -34,60 +30,90 @@ export function ProductPreview() {
         <div className="absolute left-6 top-6 h-28 w-28 rounded-full bg-[#4C9A6A]/10 blur-3xl" />
         <div className="absolute right-[-18px] top-[-22px] h-32 w-32 rounded-full bg-sky-200/40 blur-3xl" />
 
-        <div className="relative flex items-center justify-between gap-4">
+        <div className="relative">
           <div>
-            <div className="inline-flex rounded-full bg-slate-950 px-3 py-1 text-[11px] font-medium tracking-[0.16em] text-white">
-              AUDIT SNAPSHOT
-            </div>
             <h2 className="mt-4 text-2xl font-normal tracking-[-0.04em] text-slate-950">
               See what machines can understand.
             </h2>
-          </div>
-          <div className="hidden rounded-full bg-[#4C9A6A]/10 px-3 py-1 text-xs font-medium text-[#326548] ring-1 ring-[#4C9A6A]/15 sm:inline-flex">
-            Report preview
+            <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600">
+              Scores map to the crawl, metadata, schema, links, and semantic
+              clarity signals Marrai can inspect.
+            </p>
           </div>
         </div>
 
-        <div className="relative mt-6 grid gap-3 rounded-[1.5rem] border border-slate-900/10 bg-white/75 p-4 backdrop-blur-sm">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <p className="text-sm text-slate-500">Overall score</p>
-              <div className="mt-1 flex items-end gap-2">
-                <span className="text-5xl font-normal tracking-[-0.05em] text-slate-950">
-                  84
-                </span>
-                <span className="pb-1 text-sm text-slate-500">/ 100</span>
+        <div className="relative mt-6 rounded-[1.5rem] border border-slate-900/10 bg-white/75 p-4 backdrop-blur-sm">
+          <div className="grid gap-4 sm:grid-cols-[0.72fr_1fr]">
+            <div className="rounded-[1.25rem] border border-[#4C9A6A]/15 bg-[linear-gradient(180deg,rgba(255,255,255,0.95)_0%,rgba(239,248,241,0.96)_100%)] p-4 text-slate-950 shadow-[0_14px_34px_rgba(15,23,42,0.06)]">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-[0.16em] text-slate-500">
+                    Overall
+                  </p>
+                  <div className="mt-2 flex items-end gap-2">
+                    <span className="text-5xl font-normal tracking-[-0.05em]">
+                      84
+                    </span>
+                    <span className="pb-1 text-sm text-slate-500">/ 100</span>
+                  </div>
+                </div>
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#4C9A6A]/10 text-[#4C9A6A] ring-1 ring-[#4C9A6A]/15">
+                  <CheckCircle2 className="h-4 w-4" />
+                </div>
               </div>
+              <p className="mt-4 text-xs leading-5 text-slate-600">
+                Strong foundation. Schema context and link depth can improve.
+              </p>
             </div>
-            <div className="rounded-2xl border border-slate-900/10 bg-slate-950 px-3 py-2 text-right text-xs text-white">
-              <div className="font-medium">Next action</div>
-              <div className="mt-1 text-white/70">
-                Add schema to clarify entity context.
+
+            <div className="grid gap-2">
+              {metrics.map((metric) => (
+                <div
+                  key={metric.label}
+                  className="rounded-2xl border border-slate-900/8 bg-white/90 px-3 py-2.5"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-sm font-medium text-slate-900">
+                      {metric.label}
+                    </span>
+                    <span className="text-sm font-medium text-slate-700">
+                      {metric.value}
+                    </span>
+                  </div>
+                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-900/8">
+                    <div
+                      className={cn(
+                        "h-full rounded-full bg-[linear-gradient(90deg,#B7DDC0,#4C9A6A)]",
+                        metric.width,
+                      )}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-3 rounded-2xl border border-[#4C9A6A]/15 bg-[#4C9A6A]/8 px-4 py-3">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <div className="text-sm font-medium text-slate-950">
+                  Next practical fix
+                </div>
+                <p className="mt-1 text-xs leading-5 text-slate-600">
+                  Add structured data that clarifies entity context on priority
+                  pages.
+                </p>
+              </div>
+              <div className="shrink-0 rounded-full bg-white/80 px-3 py-1 text-xs font-medium text-[#326548] ring-1 ring-[#4C9A6A]/15">
+                High impact
               </div>
             </div>
           </div>
 
-          <div className="grid gap-2">
-            {metrics.slice(1).map((metric) => (
-              <div
-                key={metric.label}
-                className="flex items-center justify-between rounded-2xl border border-slate-900/8 bg-white/90 px-3 py-2.5"
-              >
-                <span className="text-sm font-medium text-slate-900">
-                  {metric.label}
-                </span>
-                <span className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                  <span className={cn("h-2.5 w-2.5 rounded-full", metric.tone)} />
-                  {metric.value}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          <div className="relative overflow-hidden rounded-2xl border border-slate-900/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(241,246,240,0.92)_100%)] px-4 py-3">
-            <div className="flex items-center justify-between text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
-              <span>crawl → parse → score → recommend</span>
-              <span className="text-[#4C9A6A]">in progress</span>
+          <div className="relative mt-3 overflow-hidden rounded-2xl border border-slate-900/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(241,246,240,0.92)_100%)] px-4 py-3">
+            <div className="flex flex-col gap-1.5 text-xs font-medium uppercase tracking-[0.18em] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+              <span>Crawl / Parse / Score / Recommend</span>
+              <span className="text-[#4C9A6A]">In progress</span>
             </div>
             <div className="relative mt-3 h-1.5 overflow-hidden rounded-full bg-slate-900/8">
               <div className="absolute inset-y-0 left-0 w-1/2 rounded-full bg-[linear-gradient(90deg,rgba(76,154,106,0.18),rgba(76,154,106,0.96),rgba(76,154,106,0.18))] animate-scan-across" />

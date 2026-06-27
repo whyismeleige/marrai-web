@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 type AuditInputPillProps = {
   className?: string;
+  controlClassName?: string;
   id?: string;
   helperText?: string | null;
   placeholder?: string;
@@ -17,6 +18,7 @@ type AuditInputPillProps = {
 
 export function AuditInputPill({
   className,
+  controlClassName,
   id = "website-url",
   helperText = "Crawl up to 20 pages. Get metadata, schema, content, and semantic clarity scores.",
   placeholder = "Enter your website URL",
@@ -52,7 +54,12 @@ export function AuditInputPill({
       <label htmlFor={id} className="sr-only">
         Enter your website URL
       </label>
-      <div className="flex items-center gap-3 rounded-full bg-white/75 pl-5 pr-1.5 py-1.5 shadow-[0_20px_80px_rgba(15,23,42,0.12)] ring-1 ring-slate-900/10 backdrop-blur-md">
+      <div
+        className={cn(
+          "flex items-center gap-3 rounded-full bg-white/75 pl-5 pr-1.5 py-1.5 shadow-[0_20px_80px_rgba(15,23,42,0.12)] ring-1 ring-slate-900/10 backdrop-blur-md",
+          controlClassName,
+        )}
+      >
         <input
           id={id}
           name="url"
@@ -77,7 +84,7 @@ export function AuditInputPill({
           aria-label={buttonLabel ?? "Run free audit"}
           className={cn(
             "inline-flex h-10 items-center justify-center rounded-full bg-slate-950 text-white transition-all hover:scale-105 hover:shadow-lg active:scale-95 sm:h-11",
-            buttonLabel ? "gap-2 px-4 sm:px-5" : "w-10 sm:w-11",
+            buttonLabel ? "gap-2 px-4 sm:px-5" : "w-10 shrink-0 sm:w-11",
           )}
         >
           {buttonLabel ? (

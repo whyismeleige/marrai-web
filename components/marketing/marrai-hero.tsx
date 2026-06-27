@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { AuditInputPill } from "./audit-input-pill";
 import { MarraiNavbar } from "./marrai-navbar";
 import { ProductPreview } from "./product-preview";
