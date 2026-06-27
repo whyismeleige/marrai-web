@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { AuditInputPill } from "./audit-input-pill";
 import { MarraiNavbar } from "./marrai-navbar";
+import { ProductPreview } from "./product-preview";
 
 export function MarraiHero() {
   return (
@@ -15,52 +16,60 @@ export function MarraiHero() {
 
         <MarraiNavbar />
 
-        <div className="relative z-10 mx-auto flex flex-1 w-full max-w-5xl flex-col items-center justify-center px-5 pb-16 pt-8 text-center sm:pb-20 sm:pt-10 lg:pb-24 lg:pt-12">
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl flex-1 items-center gap-10 px-5 pb-14 pt-8 text-center sm:px-8 sm:pb-20 sm:pt-10 lg:grid-cols-[minmax(0,1.03fr)_minmax(360px,0.82fr)] lg:px-10 lg:pb-20 lg:pt-8 lg:text-left xl:gap-14">
+          <div className="mx-auto flex max-w-3xl flex-col items-center lg:mx-0 lg:items-start">
+            <div className="animate-fade-up inline-flex rounded-full bg-white/45 px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-slate-700 ring-1 ring-slate-900/10 backdrop-blur-sm">
+              Free AI visibility audit
+            </div>
 
-          <h1 className="max-w-[920px] text-[48px] font-normal leading-[0.95] tracking-[-0.045em] text-slate-950 [text-wrap:balance] min-[400px]:text-[56px] sm:text-7xl lg:text-[92px] xl:text-[104px]">
-            <span className="animate-fade-up block">Be understood.</span>
-            <span className="animate-fade-up block [animation-delay:100ms]">
-              Get cited.
-            </span>
-          </h1>
+            <h1 className="mt-5 max-w-[920px] text-[48px] font-normal leading-[0.95] tracking-[-0.045em] text-slate-950 [text-wrap:balance] min-[400px]:text-[56px] sm:text-7xl lg:text-[86px] xl:text-[98px]">
+              <span className="animate-fade-up block [animation-delay:80ms]">
+                Be understood.
+              </span>
+              <span className="animate-fade-up block [animation-delay:160ms]">
+                Get cited.
+              </span>
+            </h1>
 
-          <p className="animate-fade-up mt-5 max-w-2xl text-base leading-relaxed text-slate-600 [animation-delay:220ms] sm:text-lg lg:text-xl">
-            Run a free AEO audit and see how AI answer engines understand your
-            metadata, schema, content, links, and semantic clarity.
-          </p>
+            <p className="animate-fade-up mt-5 max-w-2xl text-base leading-relaxed text-slate-600 [animation-delay:260ms] sm:text-lg lg:text-xl">
+              Run a free AEO audit and see whether your site is easy for answer
+              engines to crawl, parse, understand, and reference.
+            </p>
 
-          <AuditInputPill />
+            <AuditInputPill
+              id="hero-website-url"
+              className="lg:mx-0 [animation-delay:360ms]"
+            />
 
-          <div className="animate-fade-up mt-5 flex flex-wrap items-center justify-center gap-3 [animation-delay:460ms]">
-            <Link
-              href="/audit"
-              className="rounded-full bg-slate-950 px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-slate-800 hover:shadow-lg"
-            >
-              Run free audit
-            </Link>
-            <Link
-              href="/audit"
-              className="rounded-full px-6 py-2.5 text-sm font-medium text-slate-700 ring-1 ring-slate-900/10 transition-colors hover:bg-white/60"
-            >
-              View sample report
-            </Link>
+            <div className="animate-fade-up mt-4 flex flex-wrap items-center justify-center gap-3 [animation-delay:480ms] lg:justify-start">
+              <Link
+                href="/audit"
+                className="rounded-full bg-slate-950 px-6 py-2.5 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-lg"
+              >
+                Run free audit
+              </Link>
+            </div>
+
+            <div className="animate-fade-up mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[12px] text-slate-600 [animation-delay:580ms] lg:justify-start">
+              {[
+                "Crawls up to 20 pages",
+                "Metadata + schema checks",
+                "Semantic clarity scoring",
+                "Practical fixes",
+              ].map((item) => (
+                <div
+                  key={item}
+                  className="inline-flex items-center gap-2 rounded-full bg-white/[0.35] px-3 py-1 ring-1 ring-slate-900/[0.08] backdrop-blur-sm"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#4C9A6A]" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="animate-fade-up mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[12px] text-slate-600 [animation-delay:560ms]">
-            {[
-              "Crawls up to 20 pages",
-              "Metadata + schema checks",
-              "Semantic clarity scoring",
-              "Free audit report",
-            ].map((item) => (
-              <div
-                key={item}
-                className="inline-flex items-center gap-2 rounded-full bg-white/[0.35] px-3 py-1 ring-1 ring-slate-900/[0.08] backdrop-blur-sm"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#4C9A6A]" />
-                <span>{item}</span>
-              </div>
-            ))}
+          <div className="w-full lg:justify-self-end">
+            <ProductPreview />
           </div>
         </div>
       </section>

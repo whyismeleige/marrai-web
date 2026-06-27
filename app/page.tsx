@@ -6,6 +6,7 @@ import { HowItWorksSection } from "@/components/marketing/how-it-works-section";
 import { ProblemSection } from "@/components/marketing/problem-section";
 import { ResearchPreviewSection } from "@/components/marketing/research-preview-section";
 import { SignalsSection } from "@/components/marketing/signals-section";
+import { SiteFooter } from "@/components/marketing/site-footer";
 
 export const metadata: Metadata = {
   title: "Marrai — Be understood. Get cited.",
@@ -22,6 +23,7 @@ export default function Home() {
       <SignalsSection />
       <ResearchPreviewSection />
       <FinalCtaSection />
+      <SiteFooter />
     </main>
   );
 }
