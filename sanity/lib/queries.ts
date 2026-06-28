@@ -54,7 +54,16 @@ export const FEATURED_POSTS_QUERY = groq`
 export const POST_BY_SLUG_QUERY = groq`
   *[_type == "post" && slug.current == $slug && ${publishedFilter}][0] {
     ${postListFields},
-    body,
+    body[] {
+      ...,
+      markDefs[] {
+        ...,
+        _type == "internalPostLink" => {
+          ...,
+          "slug": reference->slug.current
+        }
+      }
+    },
     seo {
       metaTitle,
       metaDescription,

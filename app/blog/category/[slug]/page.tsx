@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { BlogGrid } from "@/components/blog/blog-grid";
+import { BlogHeader } from "@/components/blog/blog-header";
 import { hasSanityConfig } from "@/sanity/config/env";
 import { client } from "@/sanity/lib/client";
 import {
   CATEGORY_SLUGS_QUERY,
   POSTS_BY_CATEGORY_QUERY,
 } from "@/sanity/lib/queries";
-import type { BlogCategoryPage, BlogPostListItem } from "@/sanity/lib/types";
+import type { BlogCategoryPage } from "@/sanity/lib/types";
 
 export const revalidate = 3600;
 
@@ -58,29 +60,6 @@ export async function generateMetadata({
   };
 }
 
-function CategoryPostCard({ post }: { post: BlogPostListItem }) {
-  return (
-    <Link
-      href={`/blog/${post.slug}`}
-      className="block rounded-[1.75rem] border border-slate-900/10 bg-white/78 p-5 shadow-[0_14px_38px_rgba(15,23,42,0.04)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#4C9A6A]/25 hover:shadow-[0_22px_54px_rgba(15,23,42,0.08)]"
-    >
-      <h2 className="text-xl font-medium tracking-[-0.03em] text-slate-950">
-        {post.title}
-      </h2>
-      <p className="mt-3 text-sm leading-6 text-slate-600">{post.excerpt}</p>
-      <div className="mt-5 text-xs text-slate-500">
-        <time dateTime={post.publishedAt}>
-          {new Intl.DateTimeFormat("en", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          }).format(new Date(post.publishedAt))}
-        </time>
-      </div>
-    </Link>
-  );
-}
-
 export default async function BlogCategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
   const category = await getCategoryPage(slug);
@@ -99,26 +78,14 @@ export default async function BlogCategoryPage({ params }: CategoryPageProps) {
           Back to research
         </Link>
 
-        <section className="py-12 sm:py-16">
-          <div className="inline-flex rounded-full bg-[#4C9A6A]/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-[#326548] ring-1 ring-[#4C9A6A]/15">
-            Category
-          </div>
-          <h1 className="mt-5 text-5xl font-normal leading-[0.98] tracking-[-0.055em] text-slate-950 sm:text-6xl">
-            {category.title}
-          </h1>
-          {category.description ? (
-            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
-              {category.description}
-            </p>
-          ) : null}
-        </section>
+        <BlogHeader
+          eyebrow="Category"
+          title={category.title}
+          description={category.description}
+        />
 
         {category.posts?.length ? (
-          <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {category.posts.map((post) => (
-              <CategoryPostCard key={post._id} post={post} />
-            ))}
-          </section>
+          <BlogGrid posts={category.posts} />
         ) : (
           <div className="rounded-[2rem] border border-slate-900/10 bg-white/72 p-8 text-center shadow-[0_18px_50px_rgba(15,23,42,0.04)] backdrop-blur-sm">
             <h2 className="text-2xl font-normal tracking-[-0.035em] text-slate-950">

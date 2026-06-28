@@ -1,8 +1,12 @@
-import { PortableText } from "@portabletext/react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { CategoryPill } from "@/components/blog/category-pill";
+import { PortableTextRenderer } from "@/components/blog/portable-text";
+import { PostMeta } from "@/components/blog/post-meta";
+import { SanityImage } from "@/components/blog/sanity-image";
+import { TableOfContents } from "@/components/blog/table-of-contents";
 import { hasSanityConfig } from "@/sanity/config/env";
 import { client } from "@/sanity/lib/client";
 import { POST_BY_SLUG_QUERY, POST_SLUGS_QUERY } from "@/sanity/lib/queries";
@@ -89,13 +93,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <header className="py-12 sm:py-16">
           <div className="flex flex-wrap gap-2">
             {post.categories?.map((category) => (
-              <Link
+              <CategoryPill
                 key={category.slug}
+                category={category}
                 href={`/blog/category/${category.slug}`}
-                className="rounded-full bg-[#4C9A6A]/10 px-3 py-1 text-[11px] font-medium text-[#326548] ring-1 ring-[#4C9A6A]/15"
-              >
-                {category.title}
-              </Link>
+              />
             ))}
           </div>
           <h1 className="mt-6 text-5xl font-normal leading-[0.98] tracking-[-0.055em] text-slate-950 sm:text-6xl">
@@ -104,23 +106,28 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <p className="mt-6 text-lg leading-8 text-slate-600">
             {post.excerpt}
           </p>
-          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-slate-500">
-            {post.author?.name ? <span>{post.author.name}</span> : null}
-            <time dateTime={post.publishedAt}>
-              {new Intl.DateTimeFormat("en", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              }).format(new Date(post.publishedAt))}
-            </time>
-            {post.readingTime ? <span>{post.readingTime} min read</span> : null}
+          <div className="mt-6">
+            <PostMeta post={post} longDate />
           </div>
         </header>
 
-        <div className="rounded-[2rem] border border-slate-900/10 bg-white/78 p-5 shadow-[0_18px_54px_rgba(15,23,42,0.05)] backdrop-blur-sm sm:p-8">
-          <div className="prose prose-slate max-w-none prose-headings:font-normal prose-headings:tracking-[-0.035em] prose-p:leading-8 prose-a:text-[#326548] prose-blockquote:border-[#4C9A6A] prose-pre:overflow-x-auto">
-            <PortableText value={post.body ?? []} />
+        {post.coverImage ? (
+          <div className="mb-8 overflow-hidden rounded-[2rem] border border-slate-900/10 bg-white/60 shadow-[0_18px_54px_rgba(15,23,42,0.05)]">
+            <SanityImage
+              image={post.coverImage}
+              alt={post.coverImageAlt ?? ""}
+              width={1400}
+              height={780}
+              priority
+            />
           </div>
+        ) : null}
+
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_240px]">
+          <div className="rounded-[2rem] border border-slate-900/10 bg-white/78 p-5 shadow-[0_18px_54px_rgba(15,23,42,0.05)] backdrop-blur-sm sm:p-8">
+            <PortableTextRenderer value={post.body ?? []} />
+          </div>
+          <TableOfContents body={post.body ?? []} />
         </div>
       </article>
     </main>
