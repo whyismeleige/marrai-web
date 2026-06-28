@@ -43,6 +43,11 @@ export type BlogSEO = {
   noIndex?: boolean;
 };
 
+export type BlogPortableTextBlock = {
+  _type: string;
+  _key?: string;
+} & Record<string, unknown>;
+
 export type BlogPostListItem = {
   _id: string;
   title: string;
@@ -59,7 +64,7 @@ export type BlogPostListItem = {
 };
 
 export type BlogPostDetail = BlogPostListItem & {
-  body: Array<Record<string, unknown>>;
+  body: BlogPortableTextBlock[];
   seo?: BlogSEO;
 };
 
