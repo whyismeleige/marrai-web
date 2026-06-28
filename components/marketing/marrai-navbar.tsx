@@ -12,12 +12,20 @@ export function MarraiNavbar() {
           </span>
         </Link>
 
-        <Link
-          href="/audit"
-          className="inline-flex items-center rounded-full bg-slate-950 px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-slate-800 sm:px-5"
-        >
-          Start free
-        </Link>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            href="/blog"
+            className="rounded-full px-3 py-2 text-[13px] font-medium text-slate-700 transition-colors hover:bg-white/45 hover:text-slate-950 sm:px-4"
+          >
+            Research
+          </Link>
+          <Link
+            href="/audit"
+            className="inline-flex items-center rounded-full bg-slate-950 px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-slate-800 sm:px-5"
+          >
+            Start free
+          </Link>
+        </div>
       </nav>
     </header>
   );
