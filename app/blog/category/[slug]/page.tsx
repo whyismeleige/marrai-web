@@ -6,6 +6,7 @@ import { BlogGrid } from "@/components/blog/blog-grid";
 import { BlogHeader } from "@/components/blog/blog-header";
 import { hasSanityConfig } from "@/sanity/config/env";
 import { client } from "@/sanity/lib/client";
+import { getCanonicalUrl } from "@/sanity/lib/metadata";
 import {
   CATEGORY_SLUGS_QUERY,
   POSTS_BY_CATEGORY_QUERY,
@@ -52,11 +53,31 @@ export async function generateMetadata({
     };
   }
 
+  const title = `${category.title} Research — Marrai`;
+  const description =
+    category.description ??
+    `Research notes from Marrai about ${category.title}.`;
+  const canonical = getCanonicalUrl(`/blog/category/${category.slug}`);
+
   return {
-    title: `${category.title} Research — Marrai`,
-    description:
-      category.description ??
-      `Research notes from Marrai about ${category.title}.`,
+    title,
+    description,
+    alternates: canonical
+      ? {
+          canonical,
+        }
+      : undefined,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: canonical,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 

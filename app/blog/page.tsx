@@ -19,6 +19,22 @@ export const metadata: Metadata = {
   title: "Research — Marrai",
   description:
     "Research notes on AI visibility, answer-engine discovery, structured data, and citation readiness.",
+  alternates: {
+    canonical: "/blog",
+  },
+  openGraph: {
+    title: "Research — Marrai",
+    description:
+      "Research notes on AI visibility, answer-engine discovery, structured data, and citation readiness.",
+    type: "website",
+    url: "/blog",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Research — Marrai",
+    description:
+      "Research notes on AI visibility, answer-engine discovery, structured data, and citation readiness.",
+  },
 };
 
 async function getBlogIndexData() {

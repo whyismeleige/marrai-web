@@ -9,6 +9,7 @@ import { SanityImage } from "@/components/blog/sanity-image";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { hasSanityConfig } from "@/sanity/config/env";
 import { client } from "@/sanity/lib/client";
+import { getCanonicalUrl, getOpenGraphImage } from "@/sanity/lib/metadata";
 import { POST_BY_SLUG_QUERY, POST_SLUGS_QUERY } from "@/sanity/lib/queries";
 import type { BlogPostDetail } from "@/sanity/lib/types";
 
@@ -48,9 +49,22 @@ export async function generateMetadata({
     };
   }
 
+  const title = post.seo?.metaTitle ?? post.title;
+  const description = post.seo?.metaDescription ?? post.excerpt;
+  const canonical = getCanonicalUrl(`/blog/${post.slug}`);
+  const images = getOpenGraphImage(
+    post.seo?.ogImage ?? post.coverImage,
+    post.coverImageAlt ?? post.title,
+  );
+
   return {
-    title: post.seo?.metaTitle ?? post.title,
-    description: post.seo?.metaDescription ?? post.excerpt,
+    title,
+    description,
+    alternates: canonical
+      ? {
+          canonical,
+        }
+      : undefined,
     robots: post.seo?.noIndex
       ? {
           index: false,
@@ -58,16 +72,19 @@ export async function generateMetadata({
         }
       : undefined,
     openGraph: {
-      title: post.seo?.metaTitle ?? post.title,
-      description: post.seo?.metaDescription ?? post.excerpt,
+      title,
+      description,
       type: "article",
+      url: canonical,
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
+      images,
     },
     twitter: {
       card: "summary_large_image",
-      title: post.seo?.metaTitle ?? post.title,
-      description: post.seo?.metaDescription ?? post.excerpt,
+      title,
+      description,
+      images,
     },
   };
 }
