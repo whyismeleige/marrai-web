@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { BlogEmptyState } from "@/components/blog/blog-empty-state";
 import { BlogGrid } from "@/components/blog/blog-grid";
 import { BlogHeader } from "@/components/blog/blog-header";
 import { hasSanityConfig } from "@/sanity/config/env";
@@ -108,11 +109,7 @@ export default async function BlogCategoryPage({ params }: CategoryPageProps) {
         {category.posts?.length ? (
           <BlogGrid posts={category.posts} />
         ) : (
-          <div className="rounded-[2rem] border border-slate-900/10 bg-white/72 p-8 text-center shadow-[0_18px_50px_rgba(15,23,42,0.04)] backdrop-blur-sm">
-            <h2 className="text-2xl font-normal tracking-[-0.035em] text-slate-950">
-              No research notes published in this category yet.
-            </h2>
-          </div>
+          <BlogEmptyState title="No research notes published in this category yet." />
         )}
       </div>
     </main>

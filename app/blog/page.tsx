@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { BlogCard } from "@/components/blog/blog-card";
+import { BlogEmptyState } from "@/components/blog/blog-empty-state";
 import { BlogGrid } from "@/components/blog/blog-grid";
 import { BlogHeader } from "@/components/blog/blog-header";
 import { hasSanityConfig } from "@/sanity/config/env";
@@ -61,21 +62,6 @@ async function getBlogIndexData() {
   };
 }
 
-function EmptyState({ configured }: { configured: boolean }) {
-  return (
-    <div className="rounded-[2rem] border border-slate-900/10 bg-white/72 p-8 text-center shadow-[0_18px_50px_rgba(15,23,42,0.04)] backdrop-blur-sm">
-      <h2 className="text-2xl font-normal tracking-[-0.035em] text-slate-950">
-        No research notes published yet.
-      </h2>
-      <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600">
-        {configured
-          ? "Published Sanity posts will appear here automatically."
-          : "Sanity is not configured for this environment yet. Add the Sanity project variables to enable research content."}
-      </p>
-    </div>
-  );
-}
-
 export default async function BlogPage() {
   const { posts, featuredPosts, categories, isConfigured } =
     await getBlogIndexData();
@@ -128,7 +114,14 @@ export default async function BlogPage() {
         {posts.length ? (
           <BlogGrid posts={remainingPosts} />
         ) : (
-          <EmptyState configured={isConfigured} />
+          <BlogEmptyState
+            title="No research notes published yet."
+            description={
+              isConfigured
+                ? "Published Sanity posts will appear here automatically."
+                : "Sanity is not configured for this environment yet. Add the Sanity project variables to enable research content."
+            }
+          />
         )}
       </div>
     </main>
