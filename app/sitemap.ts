@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { hasSanityConfig } from "@/sanity/config/env";
-import { client } from "@/sanity/lib/client";
+import { getSanityClient } from "@/sanity/lib/client";
 import { getSiteUrl } from "@/sanity/lib/metadata";
 import {
   CATEGORIES_QUERY,
@@ -27,9 +27,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return staticRoutes;
   }
 
+  const sanityClient = getSanityClient();
   const [posts, categories] = await Promise.all([
-    client.fetch<BlogPostListItem[]>(POSTS_QUERY),
-    client.fetch<BlogCategory[]>(CATEGORIES_QUERY),
+    sanityClient.fetch<BlogPostListItem[]>(POSTS_QUERY),
+    sanityClient.fetch<BlogCategory[]>(CATEGORIES_QUERY),
   ]);
 
   return [

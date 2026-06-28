@@ -6,7 +6,7 @@ import { BlogEmptyState } from "@/components/blog/blog-empty-state";
 import { BlogGrid } from "@/components/blog/blog-grid";
 import { BlogHeader } from "@/components/blog/blog-header";
 import { hasSanityConfig } from "@/sanity/config/env";
-import { client } from "@/sanity/lib/client";
+import { getSanityClient } from "@/sanity/lib/client";
 import {
   CATEGORIES_QUERY,
   FEATURED_POSTS_QUERY,
@@ -48,10 +48,11 @@ async function getBlogIndexData() {
     };
   }
 
+  const sanityClient = getSanityClient();
   const [posts, featuredPosts, categories] = await Promise.all([
-    client.fetch<BlogPostListItem[]>(POSTS_QUERY),
-    client.fetch<BlogPostListItem[]>(FEATURED_POSTS_QUERY),
-    client.fetch<BlogCategory[]>(CATEGORIES_QUERY),
+    sanityClient.fetch<BlogPostListItem[]>(POSTS_QUERY),
+    sanityClient.fetch<BlogPostListItem[]>(FEATURED_POSTS_QUERY),
+    sanityClient.fetch<BlogCategory[]>(CATEGORIES_QUERY),
   ]);
 
   return {

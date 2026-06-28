@@ -1,5 +1,5 @@
 import { hasSanityConfig } from "@/sanity/config/env";
-import { client } from "@/sanity/lib/client";
+import { getSanityClient } from "@/sanity/lib/client";
 import { getCanonicalUrl, getSiteUrl } from "@/sanity/lib/metadata";
 import { POSTS_QUERY } from "@/sanity/lib/queries";
 import type { BlogPostListItem } from "@/sanity/lib/types";
@@ -28,7 +28,7 @@ export async function GET() {
   }
 
   const posts = hasSanityConfig()
-    ? await client.fetch<BlogPostListItem[]>(POSTS_QUERY)
+    ? await getSanityClient().fetch<BlogPostListItem[]>(POSTS_QUERY)
     : [];
 
   const items = posts

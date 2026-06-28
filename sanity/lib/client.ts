@@ -1,11 +1,23 @@
-import { createClient } from "next-sanity";
+import { createClient, type SanityClient } from "next-sanity";
 
-import { sanityEnv } from "@/sanity/config/env";
+import { assertSanityEnv } from "@/sanity/config/env";
 
-export const client = createClient({
-  projectId: sanityEnv.projectId ?? "",
-  dataset: sanityEnv.dataset,
-  apiVersion: sanityEnv.apiVersion,
-  useCdn: true,
-  stega: false,
-});
+let cachedClient: SanityClient | null = null;
+
+export function getSanityClient() {
+  if (cachedClient) {
+    return cachedClient;
+  }
+
+  const env = assertSanityEnv();
+
+  cachedClient = createClient({
+    projectId: env.projectId,
+    dataset: env.dataset,
+    apiVersion: env.apiVersion,
+    useCdn: true,
+    stega: false,
+  });
+
+  return cachedClient;
+}

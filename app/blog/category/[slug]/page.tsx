@@ -6,7 +6,7 @@ import { BlogEmptyState } from "@/components/blog/blog-empty-state";
 import { BlogGrid } from "@/components/blog/blog-grid";
 import { BlogHeader } from "@/components/blog/blog-header";
 import { hasSanityConfig } from "@/sanity/config/env";
-import { client } from "@/sanity/lib/client";
+import { getSanityClient } from "@/sanity/lib/client";
 import { getCanonicalUrl } from "@/sanity/lib/metadata";
 import {
   CATEGORY_SLUGS_QUERY,
@@ -25,9 +25,12 @@ async function getCategoryPage(slug: string) {
     return null;
   }
 
-  return client.fetch<BlogCategoryPage | null>(POSTS_BY_CATEGORY_QUERY, {
-    slug,
-  });
+  return getSanityClient().fetch<BlogCategoryPage | null>(
+    POSTS_BY_CATEGORY_QUERY,
+    {
+      slug,
+    },
+  );
 }
 
 export async function generateStaticParams() {
@@ -35,7 +38,7 @@ export async function generateStaticParams() {
     return [];
   }
 
-  const slugs = await client.fetch<Array<{ slug: string }>>(
+  const slugs = await getSanityClient().fetch<Array<{ slug: string }>>(
     CATEGORY_SLUGS_QUERY,
   );
 

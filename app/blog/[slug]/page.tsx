@@ -8,7 +8,7 @@ import { PostMeta } from "@/components/blog/post-meta";
 import { SanityImage } from "@/components/blog/sanity-image";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { hasSanityConfig } from "@/sanity/config/env";
-import { client } from "@/sanity/lib/client";
+import { getSanityClient } from "@/sanity/lib/client";
 import { getCanonicalUrl, getOpenGraphImage } from "@/sanity/lib/metadata";
 import { POST_BY_SLUG_QUERY, POST_SLUGS_QUERY } from "@/sanity/lib/queries";
 import type { BlogPostDetail } from "@/sanity/lib/types";
@@ -24,7 +24,9 @@ async function getPost(slug: string) {
     return null;
   }
 
-  return client.fetch<BlogPostDetail | null>(POST_BY_SLUG_QUERY, { slug });
+  return getSanityClient().fetch<BlogPostDetail | null>(POST_BY_SLUG_QUERY, {
+    slug,
+  });
 }
 
 export async function generateStaticParams() {
@@ -32,7 +34,8 @@ export async function generateStaticParams() {
     return [];
   }
 
-  const slugs = await client.fetch<Array<{ slug: string }>>(POST_SLUGS_QUERY);
+  const slugs =
+    await getSanityClient().fetch<Array<{ slug: string }>>(POST_SLUGS_QUERY);
 
   return slugs.map((item) => ({ slug: item.slug }));
 }
