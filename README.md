@@ -29,6 +29,8 @@ Marrai helps website owners understand whether their site is readable and useful
 * Page-level audit breakdown
 * Responsive design
 * Basic SEO metadata
+* CMS-powered research blog
+* Embedded Sanity Studio
 * Frontend CI with GitHub Actions
 
 ## Tech Stack
@@ -40,6 +42,8 @@ Marrai helps website owners understand whether their site is readable and useful
 * Zod
 * shadcn-style UI primitives
 * lucide-react
+* Sanity
+* next-sanity
 * pnpm
 * GitHub Actions
 * Vercel-ready deployment
@@ -53,16 +57,21 @@ marrai-web/
 │   │   └── audit/
 │   ├── audit/
 │   │   └── [jobId]/
+│   ├── blog/
+│   ├── studio/
 │   ├── layout.tsx
 │   └── page.tsx
 ├── components/
 │   ├── audit/
+│   ├── blog/
 │   ├── marketing/
 │   ├── report/
 │   └── ui/
 ├── features/
 │   └── audit/
 ├── lib/
+├── sanity/
+├── docs/
 ├── public/
 ├── .env.example
 ├── package.json
@@ -98,6 +107,8 @@ For local development:
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
 ```
+
+For Sanity blog setup, see [`docs/sanity-blog.md`](docs/sanity-blog.md).
 
 ## Running Locally
 
@@ -189,6 +200,9 @@ This keeps frontend code cleaner and gives the app a single place to normalize b
 /               Marketing homepage
 /audit          Free audit submission page
 /audit/[jobId]  Audit status and report page
+/blog           Research index
+/blog/[slug]    Research article page
+/studio         Embedded Sanity Studio
 ```
 
 ## CI
