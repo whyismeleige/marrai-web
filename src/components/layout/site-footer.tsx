@@ -1,5 +1,10 @@
+"use client"
+
 import Link from "next/link"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { motion, useReducedMotion } from "framer-motion"
+
+const footerEase = [0.16, 1, 0.3, 1] as const
 
 const footerNavLinks = [
   {
@@ -43,10 +48,21 @@ const legalLinks = [
 ] as const
 
 export function SiteFooter() {
+  const shouldReduceMotion = Boolean(useReducedMotion())
+
   return (
     <footer className="dark overflow-hidden bg-background text-foreground">
       <div className="mx-auto flex min-h-[42rem] w-full max-w-7xl flex-col px-5 pb-6 pt-20 sm:min-h-[56rem] sm:px-12 sm:pt-32 lg:min-h-[48rem] lg:px-8 lg:pb-10 lg:pt-28">
-        <div className="grid gap-12 lg:grid-cols-[1fr_28rem] lg:gap-24">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{
+            duration: shouldReduceMotion ? 0 : 0.7,
+            ease: footerEase,
+          }}
+          className="grid gap-12 lg:grid-cols-[1fr_28rem] lg:gap-24"
+        >
           <div>
             <h2 className="text-h2 font-semibold text-foreground sm:text-h1 lg:text-display">
               Talk to Us
@@ -62,7 +78,9 @@ export function SiteFooter() {
             </div>
 
             <div className="mt-14 max-w-xl sm:mt-20 lg:mt-24">
-              <p className="text-body text-foreground sm:text-body-lg">Join Our Waitlist.</p>
+              <p className="text-body text-foreground sm:text-body-lg">
+                Join Our Waitlist.
+              </p>
               <form className="mt-8 flex items-end border-b border-border sm:mt-10">
                 <label className="sr-only" htmlFor="footer-email">
                   Email address
@@ -74,13 +92,15 @@ export function SiteFooter() {
                   placeholder="EMAIL*"
                   className="min-w-0 flex-1 bg-transparent py-3 text-body uppercase text-foreground placeholder:text-muted-foreground/45 focus:outline-none"
                 />
-                <button
+                <motion.button
                   type="submit"
                   className="inline-flex size-11 shrink-0 items-center justify-center rounded-md text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                   aria-label="Join waitlist"
+                  whileHover={shouldReduceMotion ? undefined : { x: 3 }}
+                  whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                 >
                   <ArrowRight className="size-5" aria-hidden="true" />
-                </button>
+                </motion.button>
               </form>
             </div>
           </div>
@@ -134,15 +154,26 @@ export function SiteFooter() {
               ))}
             </nav>
           </div>
-        </div>
+        </motion.div>
 
         <div className="mt-auto pt-14 sm:pt-24 lg:pt-20">
-          <p
+          <motion.p
+            initial={{
+              opacity: shouldReduceMotion ? 1 : 0.45,
+              y: shouldReduceMotion ? 0 : "42%",
+            }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{
+              delay: shouldReduceMotion ? 0 : 0.12,
+              duration: shouldReduceMotion ? 0 : 0.9,
+              ease: footerEase,
+            }}
             className="font-brand text-[clamp(5.4rem,26vw,21rem)] font-semibold leading-[0.78] tracking-normal text-foreground"
             aria-label="marrai"
           >
             marrai
-          </p>
+          </motion.p>
         </div>
       </div>
     </footer>
