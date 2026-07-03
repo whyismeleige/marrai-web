@@ -1,6 +1,6 @@
 export function AiDiscoveryVisual() {
   return (
-    <div className="relative h-72 w-full overflow-hidden md:h-[31rem] lg:h-[23rem]">
+    <div className="relative h-48 w-full overflow-hidden sm:h-72 md:h-[28rem] lg:h-[20rem]">
       <svg
         className="absolute inset-0 size-full text-chart-2"
         viewBox="0 0 720 420"
@@ -35,4 +35,3 @@ export function AiDiscoveryVisual() {
     </div>
   )
 }
-

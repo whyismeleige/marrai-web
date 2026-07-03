@@ -3,9 +3,8 @@ const statement =
 
 export function ScrollFeatureVisual() {
   return (
-    <h2 className="mx-auto max-w-[17rem] text-center text-[clamp(3.75rem,13vw,5rem)] font-bold leading-[1.18] text-muted-foreground/35 sm:max-w-5xl sm:text-[clamp(4rem,6.1vw,5.75rem)] sm:leading-[1.12] lg:max-w-6xl lg:text-[clamp(3.75rem,4.8vw,5rem)]">
+    <h2 className="mx-auto max-w-[18rem] text-center text-[clamp(2.5rem,10vw,3.5rem)] font-bold leading-[1.16] text-muted-foreground/35 sm:max-w-5xl sm:text-[clamp(3.5rem,5.6vw,5rem)] sm:leading-[1.12] lg:max-w-6xl lg:text-[clamp(3rem,4vw,4.25rem)]">
       {statement}
     </h2>
   )
 }
-

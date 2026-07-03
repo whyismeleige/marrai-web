@@ -41,7 +41,7 @@ function getPlatform(id: PlatformId) {
 export function TrackingFeatureVisual() {
   return (
     <div
-      className="mt-20 space-y-5 overflow-hidden sm:mt-24 sm:space-y-6"
+      className="mt-12 space-y-3 overflow-hidden sm:mt-20 sm:space-y-5"
       aria-label="Marrai tracks AI visibility across ChatGPT, Claude, Perplexity, Gemini, Grok, Microsoft Copilot, Google AI Overviews, and Deepseek."
     >
       <PlatformRow ids={rowOne} className="mx-auto max-w-5xl justify-center" />
@@ -62,7 +62,7 @@ function PlatformRow({
   className?: string
 }) {
   return (
-    <div className={cn("flex gap-5 overflow-hidden px-6", className)}>
+    <div className={cn("flex gap-2 overflow-hidden px-4 sm:gap-4 sm:px-6", className)}>
       {ids.map((id, index) => {
         const platform = getPlatform(id)
 
@@ -78,19 +78,18 @@ function PlatformRow({
 
 function PlatformChip({ platform }: { platform: AiPlatform }) {
   return (
-    <div className="inline-flex h-16 shrink-0 items-center gap-4 rounded-full bg-card px-7 text-card-foreground ring-1 ring-border/40 sm:h-20 sm:gap-5 sm:px-9">
+    <div className="inline-flex h-9 shrink-0 items-center gap-2 rounded-full bg-card px-3 text-card-foreground ring-1 ring-border/40 sm:h-14 sm:gap-3 sm:px-5 lg:h-16 lg:gap-4 lg:px-7">
       <Image
         src={platform.iconSrc}
         alt=""
         width={36}
         height={36}
-        className="size-8 object-contain sm:size-9"
+        className="size-4 object-contain sm:size-6 lg:size-8"
         aria-hidden="true"
       />
-      <span className="whitespace-nowrap text-h3 font-normal sm:text-[2rem] sm:leading-none">
+      <span className="whitespace-nowrap text-small font-normal sm:text-body-lg lg:text-h3">
         {platform.name}
       </span>
     </div>
   )
 }
-
