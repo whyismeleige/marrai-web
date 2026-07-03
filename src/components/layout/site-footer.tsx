@@ -1,10 +1,12 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { ArrowRight, ArrowUpRight } from "lucide-react"
-import { motion, useReducedMotion } from "framer-motion"
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { brandAssets } from "@/constants/homepage-copy";
 
-const footerEase = [0.16, 1, 0.3, 1] as const
+const footerEase = [0.16, 1, 0.3, 1] as const;
 
 const footerNavLinks = [
   {
@@ -23,7 +25,7 @@ const footerNavLinks = [
     label: "Login",
     href: "/login",
   },
-] as const
+] as const;
 
 const socialLinks = [
   {
@@ -34,7 +36,7 @@ const socialLinks = [
     label: "Twitter",
     href: "https://x.com/marrai",
   },
-] as const
+] as const;
 
 const legalLinks = [
   {
@@ -45,10 +47,10 @@ const legalLinks = [
     label: "Privacy Policy",
     href: "/privacy",
   },
-] as const
+] as const;
 
 export function SiteFooter() {
-  const shouldReduceMotion = Boolean(useReducedMotion())
+  const shouldReduceMotion = Boolean(useReducedMotion());
 
   return (
     <footer className="dark overflow-hidden bg-background text-foreground">
@@ -155,9 +157,8 @@ export function SiteFooter() {
             </nav>
           </div>
         </motion.div>
-
         <div className="mt-auto pt-14 sm:pt-24 lg:pt-20">
-          <motion.p
+          <motion.div
             initial={{
               opacity: shouldReduceMotion ? 1 : 0.45,
               y: shouldReduceMotion ? 0 : "42%",
@@ -169,13 +170,20 @@ export function SiteFooter() {
               duration: shouldReduceMotion ? 0 : 0.9,
               ease: footerEase,
             }}
-            className="font-brand text-[clamp(5.4rem,26vw,21rem)] font-semibold leading-[0.78] tracking-normal text-foreground"
+            className="w-full overflow-hidden"
             aria-label="marrai"
           >
-            marrai
-          </motion.p>
+            <Image
+              src={brandAssets.wordMarkLight}
+              alt="marrai"
+              width={1600}
+              height={360}
+              className="block h-auto w-full select-none"
+              priority
+            />
+          </motion.div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

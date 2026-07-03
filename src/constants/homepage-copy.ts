@@ -19,6 +19,8 @@ export const brandAssets = {
   logoPrimaryDark: "/brand/logo-primary-dark.svg",
   iconMarkLight: "/brand/icon-mark-light.svg",
   iconMarkDark: "/brand/icon-mark-dark.svg",
+  wordMarkLight: "/brand/marrai-wordmark-light.svg",
+  wordMarkDark: "/brand/marrai-wordmark-dark.svg"
 } as const;
 
 export const homepageSections = [
