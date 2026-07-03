@@ -1,64 +1,64 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
-import { ArrowLeft, ChevronRight, X } from "lucide-react"
+import * as React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowLeft, ChevronRight, X } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { authNavItems, primaryNavItems, productNavItems } from "@/constants/nav"
-import { brandAssets, siteCopy } from "@/constants/homepage-copy"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button";
+import {
+  authNavItems,
+  primaryNavItems,
+  productNavItems,
+} from "@/constants/nav";
+import { brandAssets, siteCopy } from "@/constants/homepage-copy";
+import { cn } from "@/lib/utils";
 
-const navEase = [0.16, 1, 0.3, 1] as const
+const navEase = [0.16, 1, 0.3, 1] as const;
 
 type MobileNavProps = {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
 
-type MobileMenuState = "root" | "products"
+type MobileMenuState = "root" | "products";
 
 export function MobileNav({ open, onOpenChange }: MobileNavProps) {
-  const [menuState, setMenuState] = React.useState<MobileMenuState>("root")
-  const [direction, setDirection] = React.useState<1 | -1>(1)
-  const reduceMotion = useReducedMotion()
-  const closeButtonRef = React.useRef<HTMLButtonElement>(null)
-  const mobileAuthItems = [
-    authNavItems.find((item) => item.label === siteCopy.auth.login),
-    authNavItems.find((item) => item.label === siteCopy.auth.signUp),
-  ].filter((item): item is (typeof authNavItems)[number] => Boolean(item))
+  const [menuState, setMenuState] = React.useState<MobileMenuState>("root");
+  const [direction, setDirection] = React.useState<1 | -1>(1);
+  const reduceMotion = useReducedMotion();
+  const closeButtonRef = React.useRef<HTMLButtonElement>(null);
   const closeMenu = React.useCallback(() => {
-    setMenuState("root")
-    onOpenChange(false)
-  }, [onOpenChange])
+    setMenuState("root");
+    onOpenChange(false);
+  }, [onOpenChange]);
 
   React.useEffect(() => {
     if (!open) {
-      return
+      return;
     }
 
-    const originalOverflow = document.body.style.overflow
-    document.body.style.overflow = "hidden"
-    closeButtonRef.current?.focus()
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        closeMenu()
+        closeMenu();
       }
-    }
+    };
 
-    window.addEventListener("keydown", handleKeyDown)
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = originalOverflow
-      window.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [closeMenu, open])
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [closeMenu, open]);
 
-  const panelTransition = { duration: reduceMotion ? 0 : 0.2, ease: navEase }
-  const treeTransition = { duration: reduceMotion ? 0 : 0.18, ease: navEase }
+  const panelTransition = { duration: reduceMotion ? 0 : 0.2, ease: navEase };
+  const treeTransition = { duration: reduceMotion ? 0 : 0.18, ease: navEase };
 
   return (
     <AnimatePresence>
@@ -122,8 +122,8 @@ export function MobileNav({ open, onOpenChange }: MobileNavProps) {
                     reduceMotion={Boolean(reduceMotion)}
                     onClose={closeMenu}
                     onProductsClick={() => {
-                      setDirection(1)
-                      setMenuState("products")
+                      setDirection(1);
+                      setMenuState("products");
                     }}
                   />
                 </motion.div>
@@ -144,8 +144,8 @@ export function MobileNav({ open, onOpenChange }: MobileNavProps) {
                   <ProductsMenu
                     reduceMotion={Boolean(reduceMotion)}
                     onBack={() => {
-                      setDirection(-1)
-                      setMenuState("root")
+                      setDirection(-1);
+                      setMenuState("root");
                     }}
                     onClose={closeMenu}
                   />
@@ -160,31 +160,24 @@ export function MobileNav({ open, onOpenChange }: MobileNavProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: reduceMotion ? 0 : 0.08, ...panelTransition }}
           >
-            {mobileAuthItems.map((item) => {
-              const isPrimary = item.label === siteCopy.auth.signUp
-
+            {authNavItems.map((item) => {
               return (
                 <Button
                   key={item.label}
                   asChild
-                  variant={isPrimary ? "default" : "outline"}
-                  className={cn(
-                    "h-12 rounded-lg text-base sm:h-14",
-                    !isPrimary &&
-                      "border-border bg-background text-foreground hover:bg-muted"
-                  )}
+                  className={cn("h-12 rounded-lg text-base sm:h-14")}
                 >
                   <Link href={item.href} onClick={closeMenu}>
                     {item.label}
                   </Link>
                 </Button>
-              )
+              );
             })}
           </motion.div>
         </motion.div>
       ) : null}
     </AnimatePresence>
-  )
+  );
 }
 
 function RootMenu({
@@ -192,9 +185,9 @@ function RootMenu({
   onClose,
   onProductsClick,
 }: {
-  reduceMotion: boolean
-  onClose: () => void
-  onProductsClick: () => void
+  reduceMotion: boolean;
+  onClose: () => void;
+  onProductsClick: () => void;
 }) {
   const rowMotion = {
     variants: {
@@ -202,7 +195,7 @@ function RootMenu({
       show: { opacity: 1, y: 0 },
     },
     transition: { duration: reduceMotion ? 0 : 0.16, ease: navEase },
-  } as const
+  } as const;
 
   return (
     <motion.div
@@ -235,7 +228,7 @@ function RootMenu({
                 aria-hidden="true"
               />
             </motion.button>
-          )
+          );
         }
 
         return (
@@ -248,10 +241,10 @@ function RootMenu({
               {item.label}
             </Link>
           </motion.div>
-        )
+        );
       })}
     </motion.div>
-  )
+  );
 }
 
 function ProductsMenu({
@@ -259,9 +252,9 @@ function ProductsMenu({
   onBack,
   onClose,
 }: {
-  reduceMotion: boolean
-  onBack: () => void
-  onClose: () => void
+  reduceMotion: boolean;
+  onBack: () => void;
+  onClose: () => void;
 }) {
   const rowMotion = {
     variants: {
@@ -269,7 +262,7 @@ function ProductsMenu({
       show: { opacity: 1, y: 0 },
     },
     transition: { duration: reduceMotion ? 0 : 0.16, ease: navEase },
-  } as const
+  } as const;
 
   return (
     <div>
@@ -326,9 +319,9 @@ function ProductsMenu({
                 </span>
               </Link>
             </motion.div>
-          )
+          ),
         )}
       </motion.div>
     </div>
-  )
+  );
 }

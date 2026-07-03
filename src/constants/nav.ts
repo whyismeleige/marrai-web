@@ -1,3 +1,5 @@
+import { Boxes, FileText, LucideIcon, Network, ScanSearch, ShoppingCart } from "lucide-react";
+
 export type ProductNavStatus = "available" | "coming-soon";
 
 export type NavItem = {
@@ -11,6 +13,7 @@ export type ProductNavItem = {
   href: string;
   description: string;
   status: ProductNavStatus;
+  icon: LucideIcon;
   disabled?: boolean;
 };
 
@@ -42,18 +45,21 @@ export const productNavItems = [
     href: "/products",
     description: "Product Overview Description",
     status: "available",
+    icon: Boxes,
   },
   {
     label: "AEO Audit Tool",
     href: "/audit",
     description: "AEO Audit Tool Description about",
     status: "available",
+    icon: ScanSearch
   },
   {
     label: "Citation Intelligence",
     href: "#citation-intelligence",
     description: "Coming Soon.",
     status: "coming-soon",
+    icon: Network,
     disabled: true,
   },
   {
@@ -61,6 +67,7 @@ export const productNavItems = [
     href: "#agentic-commerce",
     description: "Coming Soon.",
     status: "coming-soon",
+    icon: ShoppingCart,
     disabled: true,
   },
   {
@@ -68,19 +75,15 @@ export const productNavItems = [
     href: "#report-generation",
     description: "Coming Soon.",
     status: "coming-soon",
+    icon: FileText,
     disabled: true,
   },
 ] as const satisfies readonly ProductNavItem[];
 
 export const authNavItems = [
   {
-    label: "Sign Up",
+    label: "Join Waitlist",
     href: "#waitlist",
-    variant: "secondary",
-  },
-  {
-    label: "Login",
-    href: "/login",
     variant: "primary",
   },
 ] as const satisfies readonly AuthNavItem[];
