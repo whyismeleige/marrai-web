@@ -3,6 +3,7 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { ChevronDown, Menu, Package } from "lucide-react"
 
 import { MobileNav } from "@/components/layout/mobile-nav"
@@ -11,9 +12,12 @@ import { authNavItems, primaryNavItems, productNavItems } from "@/constants/nav"
 import { brandAssets, siteCopy } from "@/constants/homepage-copy"
 import { cn } from "@/lib/utils"
 
+const navEase = [0.16, 1, 0.3, 1] as const
+
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [productsOpen, setProductsOpen] = React.useState(false)
+  const reduceMotion = useReducedMotion()
   const headerRef = React.useRef<HTMLElement>(null)
 
   React.useEffect(() => {
@@ -48,7 +52,7 @@ export function SiteHeader() {
         ref={headerRef}
         className="dark relative z-40 border-b border-border bg-background text-foreground"
       >
-        <div className="mx-auto flex h-24 w-full max-w-7xl items-center justify-between px-7 sm:h-28 sm:px-10 lg:h-20 lg:px-8">
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-5 sm:h-20 sm:px-8 lg:h-20 lg:px-8">
           <Link
             href="/"
             className="inline-flex items-center rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
@@ -68,7 +72,7 @@ export function SiteHeader() {
               width={72}
               height={72}
               priority
-              className="size-14 lg:hidden"
+              className="size-8 sm:size-10 lg:hidden"
             />
           </Link>
 
@@ -130,16 +134,20 @@ export function SiteHeader() {
 
           <button
             type="button"
-            className="inline-flex size-11 items-center justify-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 lg:hidden"
+            className="inline-flex size-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 lg:hidden"
             aria-label="Open menu"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(true)}
           >
-            <Menu className="size-8" aria-hidden="true" />
+            <Menu className="size-5" aria-hidden="true" />
           </button>
         </div>
 
-        {productsOpen ? <ProductsMegaMenu /> : null}
+        <AnimatePresence>
+          {productsOpen ? (
+            <ProductsMegaMenu reduceMotion={Boolean(reduceMotion)} />
+          ) : null}
+        </AnimatePresence>
       </header>
 
       <MobileNav open={mobileOpen} onOpenChange={setMobileOpen} />
@@ -147,14 +155,18 @@ export function SiteHeader() {
   )
 }
 
-function ProductsMegaMenu() {
+function ProductsMegaMenu({ reduceMotion }: { reduceMotion: boolean }) {
   const featuredItem = productNavItems[0]
   const menuItems = productNavItems.slice(1)
 
   return (
-    <div
+    <motion.div
       id="products-menu"
       className="absolute left-1/2 top-full hidden w-[min(68rem,calc(100vw-4rem))] -translate-x-1/2 pt-4 lg:block"
+      initial={{ opacity: 0, y: reduceMotion ? 0 : -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: reduceMotion ? 0 : -6 }}
+      transition={{ duration: reduceMotion ? 0 : 0.18, ease: navEase }}
     >
       <div className="grid gap-10 rounded-lg border border-border bg-card p-8 text-card-foreground shadow-xl lg:grid-cols-[19rem_1fr]">
         <Link
@@ -209,7 +221,7 @@ function ProductsMegaMenu() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
