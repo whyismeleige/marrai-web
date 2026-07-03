@@ -20,16 +20,16 @@ export function FaqSection() {
     >
       <MarketingContainer
         size="wide"
-        className="px-8 py-24 sm:px-12 sm:py-28 lg:py-32"
+        className="px-5 py-20 sm:px-12 sm:py-28 lg:py-28"
       >
         <div className="max-w-5xl">
           <h2
             id="faq-heading"
-            className="max-w-4xl text-balance text-[clamp(3.25rem,12vw,4rem)] font-bold leading-[1.08] text-foreground sm:text-[clamp(4rem,6vw,5rem)] lg:text-display"
+            className="max-w-4xl text-balance text-[clamp(2.75rem,11vw,4rem)] font-bold leading-[1.08] text-foreground sm:text-[clamp(4rem,6vw,5rem)] lg:text-display"
           >
             {faqSectionCopy.heading}
           </h2>
-          <p className="mt-8 max-w-5xl text-balance text-[1.45rem] leading-relaxed text-muted-foreground sm:text-h2 lg:text-[1.45rem]">
+          <p className="mt-6 max-w-5xl text-balance text-body leading-relaxed text-muted-foreground sm:mt-8 sm:text-body-lg lg:text-[1.2rem]">
             {faqSectionCopy.description}
           </p>
         </div>
@@ -38,34 +38,34 @@ export function FaqSection() {
           type="single"
           defaultValue={faqItems[0]?.id}
           collapsible
-          className="mt-20 w-full sm:mt-24 lg:mt-20"
+          className="mt-14 w-full sm:mt-20 lg:mt-18"
         >
           {faqItems.map((item) => (
             <AccordionItem key={item.id} value={item.id} className="border-0">
-              <AccordionTrigger className="py-5 text-[1.65rem] leading-snug sm:py-6 sm:text-[1.75rem] lg:text-h3">
+              <AccordionTrigger className="py-4 text-body-lg leading-snug sm:py-5 sm:text-h3 lg:text-h3">
                 {item.question}
               </AccordionTrigger>
-              <AccordionContent className="max-w-4xl pr-10 text-[1.3rem] sm:text-[1.35rem] lg:text-body-lg">
+              <AccordionContent className="max-w-4xl pr-8 text-body sm:text-body-lg lg:text-body">
                 {item.answer}
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
 
-        <div className="mt-20 border-t border-border pt-16 sm:mt-24 sm:pt-20 lg:mt-20">
+        <div className="mt-14 border-t border-border pt-12 sm:mt-20 sm:pt-16 lg:mt-18">
           <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <h3 className="text-[2.4rem] font-bold leading-tight text-foreground sm:text-[2.5rem] lg:text-h2">
+              <h3 className="text-[2rem] font-bold leading-tight text-foreground sm:text-[2.4rem] lg:text-h2">
                 {faqSectionCopy.support.heading}
               </h3>
-              <p className="mt-8 max-w-4xl text-[1.45rem] leading-relaxed text-muted-foreground sm:text-h2 lg:text-body-lg">
+              <p className="mt-5 max-w-4xl text-body leading-relaxed text-muted-foreground sm:mt-7 sm:text-body-lg lg:text-body">
                 {faqSectionCopy.support.description}
               </p>
             </div>
 
             <Link
               href={faqSectionCopy.support.href}
-              className="group inline-flex w-fit items-center gap-3 text-[1.45rem] leading-none text-primary underline underline-offset-4 transition-colors hover:text-primary/80 focus-visible:ring-3 focus-visible:ring-ring/30 sm:text-h3"
+              className="group inline-flex w-fit items-center gap-3 text-body-lg leading-none text-primary underline underline-offset-4 transition-colors hover:text-primary/80 focus-visible:ring-3 focus-visible:ring-ring/30 sm:text-h3"
             >
               {faqSectionCopy.support.linkLabel}
               <ChevronRightIcon

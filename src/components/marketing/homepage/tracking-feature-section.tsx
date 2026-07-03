@@ -10,13 +10,13 @@ export function TrackingFeatureSection() {
     >
       <MarketingContainer
         size="full"
-        className="min-h-[44rem] overflow-hidden px-0 py-28 text-center sm:min-h-[42rem] sm:py-32 lg:min-h-[42rem]"
+        className="min-h-[34rem] overflow-hidden px-0 py-20 text-center sm:min-h-[42rem] sm:py-28 lg:min-h-[40rem]"
       >
         <div className="mx-auto max-w-6xl px-7 sm:px-10 lg:px-8">
-          <h2 className="text-balance text-[clamp(3.75rem,11vw,4.75rem)] font-bold leading-[1.05] text-foreground sm:text-[clamp(4.5rem,6vw,6rem)] lg:text-[clamp(4.75rem,5vw,6rem)]">
+          <h2 className="text-balance text-[clamp(2.75rem,10vw,3.75rem)] font-bold leading-[1.05] text-foreground sm:text-[clamp(4rem,5.6vw,5rem)] lg:text-[clamp(3.75rem,4vw,4.75rem)]">
             Track Multiple AI Platforms
           </h2>
-          <p className="mx-auto mt-8 max-w-4xl text-[clamp(1.5rem,4.8vw,2rem)] leading-relaxed text-muted-foreground sm:mt-10 sm:text-h2">
+          <p className="mx-auto mt-5 max-w-4xl text-body leading-relaxed text-muted-foreground sm:mt-8 sm:text-body-lg">
             See how your brand appears across AI answer engines, search
             experiences, and discovery platforms.
           </p>
@@ -27,4 +27,3 @@ export function TrackingFeatureSection() {
     </MarketingSection>
   )
 }
-

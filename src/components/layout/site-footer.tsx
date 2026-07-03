@@ -45,13 +45,13 @@ const legalLinks = [
 export function SiteFooter() {
   return (
     <footer className="dark overflow-hidden bg-background text-foreground">
-      <div className="mx-auto flex min-h-[48rem] w-full max-w-7xl flex-col px-7 pb-8 pt-28 sm:min-h-[58rem] sm:px-12 sm:pt-36 lg:min-h-[50rem] lg:px-8 lg:pb-10 lg:pt-32">
-        <div className="grid gap-16 lg:grid-cols-[1fr_28rem] lg:gap-24">
+      <div className="mx-auto flex min-h-[42rem] w-full max-w-7xl flex-col px-5 pb-6 pt-20 sm:min-h-[56rem] sm:px-12 sm:pt-32 lg:min-h-[48rem] lg:px-8 lg:pb-10 lg:pt-28">
+        <div className="grid gap-12 lg:grid-cols-[1fr_28rem] lg:gap-24">
           <div>
-            <h2 className="text-h1 font-semibold text-foreground sm:text-display">
+            <h2 className="text-h2 font-semibold text-foreground sm:text-h1 lg:text-display">
               Talk to Us
             </h2>
-            <div className="mt-12 text-body-lg text-foreground sm:mt-14">
+            <div className="mt-8 text-body text-foreground sm:mt-12 sm:text-body-lg">
               <p>Get support:</p>
               <a
                 href="mailto:support@marrai.tech"
@@ -61,9 +61,9 @@ export function SiteFooter() {
               </a>
             </div>
 
-            <div className="mt-20 max-w-xl sm:mt-24 lg:mt-28">
-              <p className="text-body-lg text-foreground">Join Our Waitlist.</p>
-              <form className="mt-12 flex items-end border-b border-border">
+            <div className="mt-14 max-w-xl sm:mt-20 lg:mt-24">
+              <p className="text-body text-foreground sm:text-body-lg">Join Our Waitlist.</p>
+              <form className="mt-8 flex items-end border-b border-border sm:mt-10">
                 <label className="sr-only" htmlFor="footer-email">
                   Email address
                 </label>
@@ -85,13 +85,13 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="grid gap-16 sm:grid-cols-2 lg:grid-cols-[10rem_1fr] lg:gap-x-20 lg:gap-y-28">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-[10rem_1fr] lg:gap-x-20 lg:gap-y-24">
             <nav aria-label="Footer" className="space-y-5">
               {footerNavLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="block rounded-sm text-body-lg text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className="block rounded-sm text-body text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:text-body-lg"
                 >
                   {link.label}
                 </Link>
@@ -105,7 +105,7 @@ export function SiteFooter() {
                   href={link.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="group inline-flex items-center gap-1 rounded-sm text-body-lg text-foreground underline underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className="group inline-flex items-center gap-1 rounded-sm text-body text-foreground underline underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:text-body-lg"
                 >
                   {link.label}
                   <ArrowUpRight
@@ -116,7 +116,7 @@ export function SiteFooter() {
               ))}
             </nav>
 
-            <address className="not-italic text-body-lg leading-8 text-foreground">
+            <address className="not-italic text-body leading-7 text-foreground sm:text-body-lg sm:leading-8">
               Hyderabad
               <br />
               India, Asia
@@ -127,7 +127,7 @@ export function SiteFooter() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="block rounded-sm text-body-lg text-foreground underline underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className="block rounded-sm text-body text-foreground underline underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:text-body-lg"
                 >
                   {link.label}
                 </Link>
@@ -136,9 +136,9 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-auto pt-20 sm:pt-28 lg:pt-24">
+        <div className="mt-auto pt-14 sm:pt-24 lg:pt-20">
           <p
-            className="font-brand text-[clamp(6.25rem,29vw,23rem)] font- leading-[0.78] tracking-normal text-foreground"
+            className="font-brand text-[clamp(5.4rem,26vw,21rem)] font-semibold leading-[0.78] tracking-normal text-foreground"
             aria-label="marrai"
           >
             marrai
@@ -148,4 +148,3 @@ export function SiteFooter() {
     </footer>
   )
 }
-

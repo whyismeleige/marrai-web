@@ -11,26 +11,26 @@ export function CtaSection() {
     >
       <MarketingContainer
         size="full"
-        className="flex min-h-[52rem] flex-col items-center justify-center px-6 py-28 text-center sm:min-h-[50rem] sm:px-10 lg:min-h-[48rem] lg:py-32"
+        className="flex min-h-[38rem] flex-col items-center justify-center px-5 py-20 text-center sm:min-h-[48rem] sm:px-10 sm:py-28 lg:min-h-[44rem] lg:py-28"
       >
         <div className="mx-auto w-full max-w-6xl">
           <h2
             id="cta-heading"
-            className="mx-auto max-w-5xl text-balance text-[clamp(3.5rem,14vw,4.25rem)] font-bold leading-[1.08] text-foreground sm:text-[clamp(4.5rem,7vw,6.25rem)] lg:text-[clamp(4.75rem,5.5vw,6.25rem)]"
+            className="mx-auto max-w-5xl text-balance text-[clamp(2.65rem,10.5vw,3.75rem)] font-bold leading-[1.08] text-foreground sm:text-[clamp(4rem,6.2vw,5.5rem)] lg:text-[clamp(3.75rem,4.6vw,5rem)]"
           >
             See How AI Understands Your Brand
           </h2>
 
-          <p className="mx-auto mt-10 max-w-3xl text-balance text-[clamp(1.5rem,5.5vw,2rem)] leading-relaxed text-muted-foreground sm:mt-12 sm:text-h2">
+          <p className="mx-auto mt-6 max-w-3xl text-balance text-body leading-relaxed text-muted-foreground sm:mt-8 sm:text-body-lg">
             Run a free AEO audit and see where your brand is mentioned, cited,
             or missing in AI answers.
           </p>
 
-          <div className="mx-auto mt-12 w-full max-w-[50rem] sm:mt-11">
+          <div className="mx-auto mt-8 w-full max-w-[50rem] sm:mt-10">
             <form
               action="/audit"
               method="get"
-              className="flex w-full items-center gap-3 sm:gap-4"
+              className="flex w-full items-center gap-2 sm:gap-4"
             >
               <label htmlFor="audit-url" className="sr-only">
                 Website URL
@@ -41,24 +41,24 @@ export function CtaSection() {
                 type="url"
                 inputMode="url"
                 placeholder="Enter your Website URL"
-                className="h-16 min-w-0 flex-1 rounded-xl border border-border bg-background px-5 text-body-lg text-foreground outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 sm:h-15 sm:px-6 sm:text-h3"
+                className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-4 text-small text-foreground outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 sm:h-14 sm:px-6 sm:text-body-lg"
               />
               <Button
                 type="submit"
-                className="h-15 rounded-xl px-7 text-h3 font-normal sm:h-15 sm:px-9"
+                className="h-11 rounded-lg px-5 text-small font-normal sm:h-14 sm:px-8 sm:text-body-lg"
               >
                 <span className="hidden sm:inline">Start Free Audit</span>
                 <span className="sm:hidden">Audit</span>
               </Button>
             </form>
 
-            <div className="pointer-events-none mx-auto mt-6 flex w-full max-w-[37rem] items-start justify-center gap-1 text-foreground sm:mt-7 sm:translate-x-16 sm:justify-start">
+            <div className="pointer-events-none mx-auto mt-4 flex w-full max-w-[34rem] items-start justify-center gap-1 text-foreground sm:mt-6 sm:translate-x-12 sm:justify-start">
               <svg
                 width="129"
                 height="89"
                 viewBox="0 0 129 89"
                 fill="none"
-                className="h-auto w-28 shrink-0 -translate-y-1 sm:w-36"
+                className="h-auto w-20 shrink-0 -translate-y-1 sm:w-32"
                 aria-hidden="true"
               >
                 <path
@@ -80,7 +80,7 @@ export function CtaSection() {
                   strokeLinecap="round"
                 />
               </svg>
-              <p className="pt-10 text-left font-serif text-[1.6rem] italic leading-tight text-foreground sm:pt-14 sm:text-[1.55rem]">
+              <p className="pt-7 text-left font-serif text-[1.1rem] italic leading-tight text-foreground sm:pt-12 sm:text-[1.35rem]">
                 No Signup Required
                 <br className="sm:hidden" /> Enjoy!!!!!
               </p>
