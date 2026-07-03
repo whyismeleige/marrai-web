@@ -87,69 +87,129 @@ Important:
 - It should not feel like the page is frozen.
 - The scroll should still move, but the visual section remains fixed until the animation completes.
 
-## Animation
+## Final Scroll Animation Requirements
 
-Main Scroll Highlight Animation:
-- Initial state:
-  - All words are dim/muted.
-  - Text is visible but low contrast.
-- Scroll progress:
-  - Words brighten one by one as the user scrolls.
-  - Each word should transition smoothly from muted to bright.
-  - The animation should be tied to scroll progress, not just time.
-- Final state:
-  - All words are fully highlighted.
-  - Section then unpins/releases and the user moves to the next section.
+This section must behave like a pinned scroll-reveal statement.
 
-Suggested animation behavior:
-- Use scroll progress to map each word to a highlight stage.
-- Words should not all light up at once.
-- The highlight should move naturally from the first word to the last word.
-- The transition can slightly overlap between words for smoothness.
-- Use a scrubbed animation so the user controls the pace with scrolling.
+When the user reaches this section:
 
-Suggested timing:
-- Pinned scroll duration should feel intentional but not too long.
-- Around `150vh` to `250vh` of scroll distance is enough.
-- Desktop can use a longer scroll distance.
-- Mobile can use a slightly shorter scroll distance so it does not feel tiring.
+1. The section occupies the full viewport.
+2. The statement stays fixed/sticky in the center of the screen.
+3. The page should not visually move to the next section immediately.
+4. As the user continues scrolling, the words highlight one by one.
+5. After the final word is fully highlighted, the section releases and normal page scrolling continues.
 
-Optional subtle effects:
-- The full text block can fade in softly when the section enters.
-- Words can brighten from muted gray to foreground white.
-- Avoid bouncy or flashy animations.
-- This should feel premium and cinematic.
+The effect should feel like the user is pausing on the message while the sentence is revealed through scroll.
 
-## Implementation Notes
+## Required Scroll Behavior
 
-- Build the statement as real text, not as an image.
-- Split the sentence into individual word spans for animation.
-- Keep the text accessible.
-- Use a proper heading element, such as an `h2`.
-- If splitting words into spans, make sure screen readers can still read the sentence naturally.
-- One approach:
-  - Render an accessible full sentence for screen readers.
-  - Use the animated split-word version visually.
-- Use existing Marrai typography tokens.
-- Use existing dark background token.
-- Use muted text color for the inactive words.
-- Use foreground/white text color for active highlighted words.
-- Do not add extra copy to this section.
-- Do not add CTA buttons here.
-- This section should only focus on the scroll-highlight statement.
+- Use a tall wrapper section to create scroll distance.
+- Inside that wrapper, use a sticky viewport-height container.
+- The sticky container should keep the text centered while scroll progress advances.
+- The scroll progress should be mapped from the start of the section to the end of the section.
+- Each word should have its own scroll-progress range.
+- Words should brighten from first to last.
+- Previously highlighted words should remain bright.
+- Future words should remain dim.
+- The transition between words can overlap slightly for smoothness.
 
-Recommended technical approach:
-- Use `position: sticky` or a scroll animation library.
-- GSAP ScrollTrigger, Framer Motion `useScroll`, or a custom IntersectionObserver + scroll progress approach are acceptable.
-- The section should pin while the animation runs.
-- The next section should only become visible after the full text highlight finishes.
-- Respect `prefers-reduced-motion`.
-- For reduced motion users:
-  - Do not pin the section for a long scroll.
-  - Show the full highlighted statement normally.
-- Make sure the pinned scroll behavior does not break mobile scrolling.
-- Test carefully on desktop, tablet, and mobile.
-- Avoid layout shift when the section pins and unpins.
-- Keep the implementation isolated in a dedicated component, for example:
-  - `ScrollHighlightStatement`
-  - `PinnedTextRevealSection`
+## Visual Requirements
+
+Initial state:
+- Full sentence is visible.
+- All words are dim/muted.
+- Text is low contrast but readable enough to understand that something is there.
+
+During scroll:
+- Words become bright one by one from left to right.
+- Highlighted words should use the main foreground color.
+- Non-highlighted words should remain muted/dim.
+- The text block should remain centered.
+
+Final state:
+- Every word is highlighted.
+- The section releases after the final word is highlighted.
+
+## Important Implementation Constraint
+
+Do not animate the CSS `color` value directly using `hsl(var(--token))`.
+
+Because this project uses shadcn/Tailwind tokens that may be stored as OKLCH or other CSS color formats, directly interpolating token colors can fail or produce inconsistent results.
+
+Preferred implementation:
+- Render a dim base version of each word.
+- Render a foreground overlay version of each word on top.
+- Animate only the overlay opacity from `0` to `1`.
+- This keeps token usage stable and avoids invalid color interpolation.
+
+Example concept:
+
+```tsx
+<span className="relative inline-block text-muted-foreground/25">
+  <span aria-hidden="true">word</span>
+  <motion.span
+    aria-hidden="true"
+    className="absolute inset-0 text-foreground"
+    style={{ opacity: animatedOpacity }}
+  >
+    word
+  </motion.span>
+</span>
+
+## Final Implementation Correction
+
+If the Framer Motion `useScroll({ target })` implementation does not reliably update the word highlight, replace it with a deterministic manual scroll progress calculation.
+
+The animation must not rely on guessing whether `useScroll` is working. The implementation should calculate progress from the scroll wrapper's actual viewport position.
+
+Preferred robust approach:
+
+1. Attach a ref to the tall scroll wrapper.
+2. On scroll and resize, read the wrapper's `getBoundingClientRect()`.
+3. Calculate progress using:
+
+```ts
+const scrollableDistance = wrapper.offsetHeight - window.innerHeight
+const progress = clamp(-wrapperRect.top / scrollableDistance, 0, 1)
+Store the progress in React state.
+Use that numeric progress to calculate each word's highlight opacity.
+Use requestAnimationFrame to avoid excessive state updates.
+Remove the scroll listener on cleanup.
+
+This gives full control and avoids cases where Framer Motion target offsets do not behave as expected with sticky containers.
+
+Required Word Highlight Logic
+
+Each word should calculate its own opacity from numeric progress:
+
+const start = index / totalWords
+const end = (index + 1) / totalWords
+const opacity = clamp((progress - start) / (end - start), 0, 1)
+
+To make it smoother, a small overlap is allowed:
+
+const segment = 1 / totalWords
+const start = index * segment * 0.85
+const end = start + segment * 1.6
+
+Requirements:
+
+Highlighted words remain bright.
+Future words remain dim.
+The first word should begin highlighting shortly after the section becomes sticky.
+The final word must be fully highlighted before the sticky section releases.
+The text must remain centered while this happens.
+Important
+
+Do not animate token colors directly.
+
+Use:
+
+dim base word: text-muted-foreground/20
+foreground overlay word: text-foreground
+animated opacity number from React state
+Debugging Requirement
+
+During implementation, verify that progress changes from 0 to 1 while scrolling through the section.
+
+Do not leave debug UI or console logs in the final code.

@@ -1,11 +1,6 @@
 "use client"
 
-import {
-  motion,
-  type MotionValue,
-  useTransform,
-  useReducedMotion,
-} from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 
 const statement =
   "The future of search is changing. Marrai is being built for the new era of AI discovery."
@@ -15,7 +10,7 @@ const textClassName =
 const highlightEase = [0.16, 1, 0.3, 1] as const
 
 type ScrollFeatureVisualProps = {
-  scrollProgress: MotionValue<number>
+  progress: number
   shouldReduceMotion: boolean
 }
 
@@ -23,33 +18,39 @@ type HighlightWordProps = {
   word: string
   index: number
   total: number
-  scrollProgress: MotionValue<number>
+  progress: number
+}
+
+function getWordOpacity(progress: number, index: number, total: number) {
+  const segment = 1 / total
+  const start = index * segment * 0.82
+  const end = Math.min(1, start + segment * 1.45)
+  const raw = (progress - start) / (end - start)
+  const clamped = Math.min(Math.max(raw, 0), 1)
+
+  return clamped * clamped * (3 - 2 * clamped)
 }
 
 function HighlightWord({
   word,
   index,
   total,
-  scrollProgress,
+  progress,
 }: HighlightWordProps) {
-  const start = (index / total) * 0.82
-  const end = start + 0.18
-  const color = useTransform(
-    scrollProgress,
-    [start, end],
-    ["hsl(var(--muted-foreground) / 0.35)", "hsl(var(--foreground))"]
-  )
-  const opacity = useTransform(scrollProgress, [start, end], [0.58, 1])
+  const opacity = getWordOpacity(progress, index, total)
 
   return (
-    <motion.span style={{ color, opacity }} className="inline-block">
-      {word}
-    </motion.span>
+    <span className="relative inline-block text-muted-foreground/20">
+      <span>{word}</span>
+      <span style={{ opacity }} className="absolute inset-0 text-foreground">
+        {word}
+      </span>
+    </span>
   )
 }
 
 export function ScrollFeatureVisual({
-  scrollProgress,
+  progress,
   shouldReduceMotion,
 }: ScrollFeatureVisualProps) {
   const prefersReducedMotion = Boolean(useReducedMotion())
@@ -75,7 +76,7 @@ export function ScrollFeatureVisual({
               word={word}
               index={index}
               total={words.length}
-              scrollProgress={scrollProgress}
+              progress={progress}
             />
             {index < words.length - 1 ? " " : null}
           </span>
