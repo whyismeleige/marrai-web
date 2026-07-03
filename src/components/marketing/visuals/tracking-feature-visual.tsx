@@ -1,4 +1,7 @@
+"use client"
+
 import Image from "next/image"
+import { motion, useReducedMotion } from "framer-motion"
 
 import { aiPlatforms, type AiPlatform } from "@/constants/platforms"
 import { cn } from "@/lib/utils"
@@ -33,23 +36,42 @@ const rowThree = [
 ] as const
 
 type PlatformId = (typeof aiPlatforms)[number]["id"]
+type MarqueeDirection = "left" | "right"
 
 function getPlatform(id: PlatformId) {
   return aiPlatforms.find((platform) => platform.id === id)
 }
 
 export function TrackingFeatureVisual() {
+  const shouldReduceMotion = Boolean(useReducedMotion())
+
   return (
-    <div
-      className="mt-12 space-y-3 overflow-hidden sm:mt-20 sm:space-y-5"
-      aria-label="Marrai tracks AI visibility across ChatGPT, Claude, Perplexity, Gemini, Grok, Microsoft Copilot, Google AI Overviews, and Deepseek."
-    >
-      <PlatformRow ids={rowOne} className="mx-auto max-w-5xl justify-center" />
+    <div className="mt-12 space-y-3 overflow-hidden sm:mt-20 sm:space-y-5">
+      <p className="sr-only">
+        Marrai tracks AI visibility across ChatGPT, Claude, Perplexity, Gemini,
+        Grok, Microsoft Copilot, Google AI Overviews, and Deepseek.
+      </p>
+      <PlatformRow
+        ids={rowOne}
+        className="mx-auto max-w-5xl"
+        direction="left"
+        duration={30}
+        shouldReduceMotion={shouldReduceMotion}
+      />
       <PlatformRow
         ids={rowTwo}
-        className="relative left-1/2 w-screen -translate-x-1/2 justify-center"
+        className="relative left-1/2 w-screen -translate-x-1/2"
+        direction="right"
+        duration={36}
+        shouldReduceMotion={shouldReduceMotion}
       />
-      <PlatformRow ids={rowThree} className="mx-auto max-w-5xl justify-center" />
+      <PlatformRow
+        ids={rowThree}
+        className="mx-auto max-w-5xl"
+        direction="left"
+        duration={32}
+        shouldReduceMotion={shouldReduceMotion}
+      />
     </div>
   )
 }
@@ -57,12 +79,58 @@ export function TrackingFeatureVisual() {
 function PlatformRow({
   ids,
   className,
+  direction,
+  duration,
+  shouldReduceMotion,
+}: {
+  ids: readonly PlatformId[]
+  className?: string
+  direction: MarqueeDirection
+  duration: number
+  shouldReduceMotion: boolean
+}) {
+  const initialX = direction === "left" ? "0%" : "-50%"
+  const animateX = direction === "left" ? "-50%" : "0%"
+
+  return (
+    <div
+      className={cn("overflow-hidden px-4 sm:px-6", className)}
+      aria-hidden="true"
+    >
+      {shouldReduceMotion ? (
+        <div className="flex justify-center">
+          <PlatformChipGroup ids={ids} />
+        </div>
+      ) : (
+        <motion.div
+          initial={{ x: initialX }}
+          animate={{ x: animateX }}
+          transition={{
+            duration,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+          className="flex w-max"
+        >
+          <PlatformChipGroup ids={ids} />
+          <PlatformChipGroup ids={ids} />
+        </motion.div>
+      )}
+    </div>
+  )
+}
+
+function PlatformChipGroup({
+  ids,
+  className,
 }: {
   ids: readonly PlatformId[]
   className?: string
 }) {
   return (
-    <div className={cn("flex gap-2 overflow-hidden px-4 sm:gap-4 sm:px-6", className)}>
+    <div
+      className={cn("flex shrink-0 gap-2 pr-2 sm:gap-4 sm:pr-4", className)}
+    >
       {ids.map((id, index) => {
         const platform = getPlatform(id)
 
