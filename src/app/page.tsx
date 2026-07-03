@@ -4,6 +4,7 @@ import { FaqSection } from "@/components/marketing/homepage/faq-section"
 import { HeroSection } from "@/components/marketing/homepage/hero-section"
 import { ScrollFeatureSection } from "@/components/marketing/homepage/scroll-feature-section"
 import { TrackingFeatureSection } from "@/components/marketing/homepage/tracking-feature-section"
+import { WaitlistSection } from "@/components/marketing/homepage/waitlist-section"
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
       <TrackingFeatureSection />
       <CtaSection />
       <FaqSection />
+      <WaitlistSection />
     </>
   )
 }
