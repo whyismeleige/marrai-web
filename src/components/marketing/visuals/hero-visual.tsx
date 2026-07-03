@@ -32,7 +32,6 @@ type OrbitTrackBase = {
 type OrbitTrack = OrbitTrackBase & {
   icons: readonly OrbitIcon[]
 }
-
 const orbitTrackBases = [
   {
     id: "outer",
@@ -49,7 +48,7 @@ const orbitTrackBases = [
   {
     id: "second",
     pathD:
-      "M10 590C58 308 324 126 600 126C876 126 1142 308 1190 590",
+      "M10 585C58 298 324 116 600 116C876 116 1142 298 1190 585",
     opacity: 0.82,
     duration: 15,
     direction: "forward",
@@ -61,7 +60,7 @@ const orbitTrackBases = [
   {
     id: "third",
     pathD:
-      "M130 590C188 380 398 248 600 248C802 248 1012 380 1070 590",
+      "M130 575C188 358 398 222 600 222C802 222 1012 358 1070 575",
     opacity: 0.82,
     duration: 13,
     direction: "reverse",
@@ -73,7 +72,7 @@ const orbitTrackBases = [
   {
     id: "inner",
     pathD:
-      "M270 590C318 458 452 374 600 374C748 374 882 458 930 590",
+      "M270 560C318 428 452 340 600 340C748 340 882 428 930 560",
     opacity: 0.86,
     duration: 12,
     direction: "forward",
@@ -191,15 +190,15 @@ function getKeyPoints(direction: OrbitDirection, progress?: number) {
 
 export function HeroVisual() {
   const shouldReduceMotion = Boolean(useReducedMotion())
-
-  return (
-    <div className="relative mx-auto mt-8 h-[27rem] w-full max-w-[82rem] overflow-hidden sm:mt-10 sm:h-[33rem] lg:mt-12 lg:h-[34rem]">
+return (
+  <div className="relative mx-auto mt-7 flex w-full max-w-[96rem] flex-col items-center sm:mt-10 lg:mt-11">
+    <div className="relative h-[19.5rem] w-full overflow-hidden sm:h-[26rem] md:h-[29rem] lg:h-[30.5rem] xl:h-[31.5rem]">
       <div
-        className="absolute left-1/2 top-0 h-full w-[48rem] -translate-x-1/2 text-muted-foreground sm:w-[72rem] lg:w-[84rem]"
+        className="absolute left-1/2 top-0 h-full w-[42rem] -translate-x-1/2 text-muted-foreground sm:w-[72rem] md:w-[82rem] lg:w-[92rem] xl:w-[100rem]"
         aria-hidden="true"
       >
         <svg
-          className="pointer-events-none absolute inset-x-0 top-0 h-full w-full"
+          className="pointer-events-none absolute inset-x-0 top-0 h-full w-full overflow-visible"
           viewBox="0 0 1200 620"
           fill="none"
           preserveAspectRatio="xMidYMin slice"
@@ -210,6 +209,7 @@ export function HeroVisual() {
               d={track.pathD}
               stroke="currentColor"
               strokeWidth="2"
+              strokeLinecap="round"
               initial={{
                 opacity: shouldReduceMotion ? track.opacity : 0,
                 pathLength: shouldReduceMotion ? 1 : 0,
@@ -271,26 +271,32 @@ export function HeroVisual() {
         </svg>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: shouldReduceMotion ? 0 : 0.95,
-          duration: shouldReduceMotion ? 0 : 0.65,
-          ease: heroVisualEase,
-        }}
-        whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.015 }}
-        whileTap={shouldReduceMotion ? undefined : { scale: 0.99 }}
-        className="absolute inset-x-0 bottom-12 flex justify-center sm:bottom-16"
-      >
-        <Button
-          asChild
-          size="lg"
-          className="h-10 rounded-lg px-5 text-label shadow-sm sm:h-11 sm:px-6 sm:text-body"
-        >
-          <Link href="/audit">Get a Free AEO Audit</Link>
-        </Button>
-      </motion.div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent sm:w-24" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent sm:w-24" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent sm:h-24" />
     </div>
-  )
+
+    <motion.div
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        delay: shouldReduceMotion ? 0 : 0.95,
+        duration: shouldReduceMotion ? 0 : 0.65,
+        ease: heroVisualEase,
+      }}
+      whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.015 }}
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.99 }}
+      className="mt-5 flex justify-center sm:mt-6 lg:mt-7"
+    >
+      <Button
+        asChild
+        size="lg"
+        className="h-10 rounded-lg px-5 text-label shadow-sm sm:h-11 sm:px-6 sm:text-body"
+      >
+        <Link href="/audit">Get a Free AEO Audit</Link>
+      </Button>
+    </motion.div>
+  </div>
+)
+  
 }
