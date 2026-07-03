@@ -170,7 +170,7 @@ export function AiDiscoverySection() {
         </div>
 
         <div ref={metricsRef} className="flex flex-col lg:pt-16">
-          <div className="text-center md:self-end md:text-right lg:self-auto lg:text-center">
+          <div className="text-right">
             <SlotMetricValue
               value="900M+"
               shouldAnimate={shouldAnimateMetrics}
