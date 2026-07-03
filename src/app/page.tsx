@@ -1,3 +1,9 @@
-export default function Page() {
-  return <h1>Hello World, I am batman.</h1>;
+import { HeroSection } from "@/components/marketing/homepage/hero-section"
+
+export default function HomePage() {
+  return (
+    <>
+      <HeroSection />
+    </>
+  )
 }
