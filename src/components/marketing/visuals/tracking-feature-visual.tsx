@@ -1,96 +1,70 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { motion, useReducedMotion } from "framer-motion"
+import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 
-import { aiPlatforms, type AiPlatform } from "@/constants/platforms"
-import { cn } from "@/lib/utils"
+import { aiPlatforms, type AiPlatform } from "@/constants/platforms";
+import { cn } from "@/lib/utils";
 
-const rowOne = [
-  "chatgpt",
-  "claude",
-  "perplexity",
-  "gemini",
-  "grok",
-  "microsoft-copilot",
-  "google-ai-overviews",
-] as const
+type MarqueeDirection = "left" | "right";
 
-const rowTwo = [
-  "google-ai-overviews",
-  "deepseek",
-  "claude",
-  "microsoft-copilot",
-  "chatgpt",
-  "perplexity",
-  "gemini",
-] as const
-
-const rowThree = [
-  "deepseek",
-  "claude",
-  "perplexity",
-  "gemini",
-  "grok",
-  "microsoft-copilot",
-] as const
-
-type PlatformId = (typeof aiPlatforms)[number]["id"]
-type MarqueeDirection = "left" | "right"
-
-function getPlatform(id: PlatformId) {
-  return aiPlatforms.find((platform) => platform.id === id)
-}
+const rowOne = aiPlatforms;
+const rowTwo = [...aiPlatforms].reverse();
+const rowThree = aiPlatforms;
 
 export function TrackingFeatureVisual() {
-  const shouldReduceMotion = Boolean(useReducedMotion())
+  const shouldReduceMotion = Boolean(useReducedMotion());
+
+  const platformNames = aiPlatforms.map((platform) => platform.name).join(", ");
 
   return (
     <div className="mt-12 space-y-3 overflow-hidden sm:mt-20 sm:space-y-5">
       <p className="sr-only">
-        Marrai tracks AI visibility across ChatGPT, Claude, Perplexity, Gemini,
-        Grok, Microsoft Copilot, Google AI Overviews, and Deepseek.
+        Marrai tracks AI visibility across {platformNames}.
       </p>
+
       <PlatformRow
-        ids={rowOne}
+        platforms={rowOne}
         className="mx-auto max-w-5xl"
         direction="left"
         duration={30}
         shouldReduceMotion={shouldReduceMotion}
       />
+
       <PlatformRow
-        ids={rowTwo}
+        platforms={rowTwo}
         className="relative left-1/2 w-screen -translate-x-1/2"
         direction="right"
         duration={36}
         shouldReduceMotion={shouldReduceMotion}
       />
+
       <PlatformRow
-        ids={rowThree}
+        platforms={rowThree}
         className="mx-auto max-w-5xl"
         direction="left"
-        duration={32}
+        duration={30}
         shouldReduceMotion={shouldReduceMotion}
       />
     </div>
-  )
+  );
 }
 
 function PlatformRow({
-  ids,
+  platforms,
   className,
   direction,
   duration,
   shouldReduceMotion,
 }: {
-  ids: readonly PlatformId[]
-  className?: string
-  direction: MarqueeDirection
-  duration: number
-  shouldReduceMotion: boolean
+  platforms: readonly AiPlatform[];
+  className?: string;
+  direction: MarqueeDirection;
+  duration: number;
+  shouldReduceMotion: boolean;
 }) {
-  const initialX = direction === "left" ? "0%" : "-50%"
-  const animateX = direction === "left" ? "-50%" : "0%"
+  const initialX = direction === "left" ? "0%" : "-50%";
+  const animateX = direction === "left" ? "-50%" : "0%";
 
   return (
     <div
@@ -99,7 +73,7 @@ function PlatformRow({
     >
       {shouldReduceMotion ? (
         <div className="flex justify-center">
-          <PlatformChipGroup ids={ids} />
+          <PlatformChipGroup platforms={platforms} />
         </div>
       ) : (
         <motion.div
@@ -112,36 +86,28 @@ function PlatformRow({
           }}
           className="flex w-max"
         >
-          <PlatformChipGroup ids={ids} />
-          <PlatformChipGroup ids={ids} />
+          <PlatformChipGroup platforms={platforms} />
+          <PlatformChipGroup platforms={platforms} />
         </motion.div>
       )}
     </div>
-  )
+  );
 }
 
 function PlatformChipGroup({
-  ids,
+  platforms,
   className,
 }: {
-  ids: readonly PlatformId[]
-  className?: string
+  platforms: readonly AiPlatform[];
+  className?: string;
 }) {
   return (
-    <div
-      className={cn("flex shrink-0 gap-2 pr-2 sm:gap-4 sm:pr-4", className)}
-    >
-      {ids.map((id, index) => {
-        const platform = getPlatform(id)
-
-        if (!platform) {
-          return null
-        }
-
-        return <PlatformChip key={`${id}-${index}`} platform={platform} />
-      })}
+    <div className={cn("flex shrink-0 gap-2 pr-2 sm:gap-4 sm:pr-4", className)}>
+      {platforms.map((platform) => (
+        <PlatformChip key={platform.id} platform={platform} />
+      ))}
     </div>
-  )
+  );
 }
 
 function PlatformChip({ platform }: { platform: AiPlatform }) {
@@ -155,9 +121,10 @@ function PlatformChip({ platform }: { platform: AiPlatform }) {
         className="size-4 object-contain sm:size-6 lg:size-8"
         aria-hidden="true"
       />
+
       <span className="whitespace-nowrap text-small font-normal sm:text-body-lg lg:text-h3">
         {platform.name}
       </span>
     </div>
-  )
+  );
 }

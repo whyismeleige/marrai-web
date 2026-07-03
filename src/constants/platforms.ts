@@ -19,6 +19,12 @@ export const aiPlatforms = [
     iconAlt: "Claude logo",
   },
   {
+    id: "google-ai-mode",
+    name: "Google AI Mode",
+    iconSrc: "/ai-platform-icons/google.svg",
+    iconAlt: "Google AI Mode logo"
+  },
+  {
     id: "perplexity",
     name: "Perplexity",
     iconSrc: "/ai-platform-icons/perplexity.svg",
