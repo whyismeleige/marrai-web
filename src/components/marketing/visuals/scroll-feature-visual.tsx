@@ -1,13 +1,12 @@
 "use client"
 
-import { motion, useReducedMotion } from "framer-motion"
-
 const statement =
   "The future of search is changing. Marrai is being built for the new era of AI discovery."
+
 const words = statement.split(" ")
+
 const textClassName =
-  "mx-auto max-w-[18rem] text-center text-[clamp(2.5rem,10vw,3.5rem)] font-bold leading-[1.16] sm:max-w-5xl sm:text-[clamp(3.5rem,5.6vw,5rem)] sm:leading-[1.12] lg:max-w-6xl lg:text-[clamp(3rem,4vw,4.25rem)]"
-const highlightEase = [0.16, 1, 0.3, 1] as const
+  "mx-auto max-w-[20rem] text-center text-[clamp(2.15rem,9vw,3.15rem)] font-bold leading-[1.12] tracking-[-0.04em] sm:max-w-5xl sm:text-[clamp(3rem,5.5vw,4.5rem)] sm:leading-[1.08] lg:max-w-6xl lg:text-[clamp(3.1rem,4vw,4.4rem)]"
 
 type ScrollFeatureVisualProps = {
   progress: number
@@ -21,14 +20,28 @@ type HighlightWordProps = {
   progress: number
 }
 
-function getWordOpacity(progress: number, index: number, total: number) {
-  const segment = 1 / total
-  const start = index * segment * 0.82
-  const end = Math.min(1, start + segment * 1.45)
-  const raw = (progress - start) / (end - start)
-  const clamped = Math.min(Math.max(raw, 0), 1)
+function clamp(value: number, min = 0, max = 1) {
+  return Math.min(Math.max(value, min), max)
+}
+
+function smoothstep(value: number) {
+  const clamped = clamp(value)
 
   return clamped * clamped * (3 - 2 * clamped)
+}
+
+function getWordOpacity(progress: number, index: number, total: number) {
+  /*
+   * Reveal starts after a tiny pause and completes before sticky release,
+   * so the page feels held until the full sentence is readable.
+   */
+  const revealProgress = clamp((progress - 0.04) / 0.9)
+  const segment = 1 / total
+  const start = index * segment * 0.88
+  const end = Math.min(1, start + segment * 1.45)
+  const raw = (revealProgress - start) / (end - start)
+
+  return smoothstep(raw)
 }
 
 function HighlightWord({
@@ -40,9 +53,13 @@ function HighlightWord({
   const opacity = getWordOpacity(progress, index, total)
 
   return (
-    <span className="relative inline-block text-muted-foreground/20">
-      <span>{word}</span>
-      <span style={{ opacity }} className="absolute inset-0 text-foreground">
+    <span className="relative inline-block whitespace-nowrap text-muted-foreground/20">
+      <span aria-hidden="true">{word}</span>
+      <span
+        aria-hidden="true"
+        style={{ opacity }}
+        className="absolute inset-0 text-foreground"
+      >
         {word}
       </span>
     </span>
@@ -53,22 +70,17 @@ export function ScrollFeatureVisual({
   progress,
   shouldReduceMotion,
 }: ScrollFeatureVisualProps) {
-  const prefersReducedMotion = Boolean(useReducedMotion())
-
-  if (shouldReduceMotion || prefersReducedMotion) {
+  if (shouldReduceMotion) {
     return <h2 className={`${textClassName} text-foreground`}>{statement}</h2>
   }
 
   return (
     <>
       <h2 className="sr-only">{statement}</h2>
-      <motion.div
+
+      <div
         aria-hidden="true"
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.45 }}
-        transition={{ duration: 0.7, ease: highlightEase }}
-        className={`${textClassName} text-muted-foreground/35`}
+        className={`${textClassName} text-muted-foreground/20`}
       >
         {words.map((word, index) => (
           <span key={`${word}-${index}`} className="inline">
@@ -81,7 +93,7 @@ export function ScrollFeatureVisual({
             {index < words.length - 1 ? " " : null}
           </span>
         ))}
-      </motion.div>
+      </div>
     </>
   )
 }

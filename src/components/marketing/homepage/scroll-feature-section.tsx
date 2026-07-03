@@ -3,59 +3,60 @@
 import { useEffect, useRef, useState } from "react"
 import { useReducedMotion } from "framer-motion"
 
-import { MarketingContainer } from "@/components/marketing/primitives/marketing-container"
-import { MarketingSection } from "@/components/marketing/primitives/marketing-section"
 import { ScrollFeatureVisual } from "@/components/marketing/visuals/scroll-feature-visual"
 import { cn } from "@/lib/utils"
 
-function clamp(value: number, min: number, max: number) {
+function clamp(value: number, min = 0, max = 1) {
   return Math.min(Math.max(value, min), max)
 }
 
 export function ScrollFeatureSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
+  const frameRef = useRef<number | null>(null)
   const [progress, setProgress] = useState(0)
   const shouldReduceMotion = Boolean(useReducedMotion())
 
   useEffect(() => {
     if (shouldReduceMotion) {
+      setProgress(1)
       return
     }
 
-    const wrapper = sectionRef.current
+    const section = sectionRef.current
 
-    if (!wrapper) {
+    if (!section) {
       return
     }
-
-    let frameId: number | null = null
 
     const updateProgress = () => {
-      frameId = null
+      frameRef.current = null
 
-      const rect = wrapper.getBoundingClientRect()
-      const scrollableDistance = wrapper.offsetHeight - window.innerHeight
+      const rect = section.getBoundingClientRect()
+      const viewportHeight = window.innerHeight
+      const scrollDistance = section.offsetHeight - viewportHeight
+
       const nextProgress =
-        scrollableDistance <= 0
-          ? 1
-          : clamp(-rect.top / scrollableDistance, 0, 1)
+        scrollDistance <= 0 ? 1 : clamp(-rect.top / scrollDistance)
 
-      setProgress((currentProgress) =>
-        Math.abs(currentProgress - nextProgress) < 0.001
-          ? currentProgress
-          : nextProgress
-      )
+      setProgress((currentProgress) => {
+        if (Math.abs(currentProgress - nextProgress) < 0.001) {
+          return currentProgress
+        }
+
+        return nextProgress
+      })
     }
 
     const requestProgressUpdate = () => {
-      if (frameId !== null) {
+      if (frameRef.current !== null) {
         return
       }
 
-      frameId = window.requestAnimationFrame(updateProgress)
+      frameRef.current = window.requestAnimationFrame(updateProgress)
     }
 
     requestProgressUpdate()
+
     window.addEventListener("scroll", requestProgressUpdate, { passive: true })
     window.addEventListener("resize", requestProgressUpdate)
 
@@ -63,42 +64,37 @@ export function ScrollFeatureSection() {
       window.removeEventListener("scroll", requestProgressUpdate)
       window.removeEventListener("resize", requestProgressUpdate)
 
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId)
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current)
       }
     }
   }, [shouldReduceMotion])
 
-  const visualProgress = shouldReduceMotion ? 1 : progress
-
   return (
-    <MarketingSection
-      spacing="none"
-      className="dark bg-background text-foreground"
-    >
+    <section className="dark relative -mt-px bg-background text-foreground">
       <div
         ref={sectionRef}
         className={cn(
+          "relative",
           shouldReduceMotion
-            ? "min-h-[34rem] sm:min-h-[42rem] lg:min-h-[38rem]"
-            : "min-h-[200vh] sm:min-h-[220vh] lg:min-h-[240vh]"
+            ? "h-svh min-h-[34rem]"
+            : "h-[185svh] sm:h-[200svh] lg:h-[210svh]"
         )}
       >
-        <MarketingContainer
-          size="wide"
+        <div
           className={cn(
-            "grid place-items-center px-8 sm:px-10",
-            shouldReduceMotion
-              ? "min-h-[34rem] py-20 sm:min-h-[42rem] lg:min-h-[38rem]"
-              : "sticky top-0 min-h-screen py-20"
+            "relative w-full",
+            shouldReduceMotion ? "h-svh min-h-[34rem]" : "sticky top-0 h-svh"
           )}
         >
-          <ScrollFeatureVisual
-            progress={visualProgress}
-            shouldReduceMotion={shouldReduceMotion}
-          />
-        </MarketingContainer>
+          <div className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 px-5 text-center sm:px-8 lg:px-10">
+            <ScrollFeatureVisual
+              progress={shouldReduceMotion ? 1 : progress}
+              shouldReduceMotion={shouldReduceMotion}
+            />
+          </div>
+        </div>
       </div>
-    </MarketingSection>
+    </section>
   )
 }
