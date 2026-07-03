@@ -117,44 +117,100 @@ Button behavior:
 
 ## Animation
 
-The hero should feel alive but not distracting.
+The hero orbit animation must look like AI platform logos are travelling through a live discovery network, not just floating in place.
 
-Suggested animations:
+The icons should move along the actual orbit paths. They should enter from one side of the visible hero area, travel across the curved path, leave the cropped area, and then loop/re-enter again. Some icons should move left-to-right and some should move right-to-left so the motion feels orbital and alive.
+
+The motion should be slightly fast paced compared to a slow decorative animation, but it should still feel premium and calm. It should not feel like a loading spinner.
+
+### Required Hero Animation Behavior
 
 1. Heading Entrance
    - Eyebrow fades in first.
    - Heading fades in and moves up slightly.
-   - Keep the animation smooth and premium.
+   - The entrance should be smooth and premium.
+   - Avoid bouncy or playful easing.
 
 2. Orbit Line Animation
-   - Orbit lines can fade in softly.
-   - Orbit lines have to draw in from left to right or right to left alternatively using SVG path animation.
-   - Ex: The first orbit line has to be from left to right and then the next line will be right to left to have an    orbital animation properly.
-   - The animation should be subtle, not too flashy.
+   - Orbit lines should fade in softly.
+   - Orbit lines may draw in using SVG path animation.
+   - Alternate the draw direction where possible:
+     - first orbit can draw left-to-right
+     - second orbit can draw right-to-left
+     - third orbit can draw left-to-right
+     - fourth orbit can draw right-to-left
+   - The line animation should happen once on entrance.
 
-3. Icon Animation
-   - Icons have move along the orbital path like a Planet revolving from its orbital path
-   - The icons have to be placed equally and not that far aprat but not that close along the orbital path. 
-   - Avoid fast spinning. It should not feel like a loading animation.
+3. Platform Icon Orbit Movement
+   - Platform icons must travel along the actual SVG orbit paths.
+   - Icons should not be positioned near the paths using unrelated absolute x/y animation.
+   - The same SVG path geometry used to draw the orbit line should be used to animate the icon movement.
+   - Icons should appear to enter from outside the visible hero crop, move across the arc, and leave the crop.
+   - Icons should then loop/re-enter again.
+   - Some icons should move left-to-right.
+   - Some icons should move right-to-left.
+   - Icons should be staggered so they are already distributed across the visual on page load.
+   - Icons should stay upright. Do not rotate platform logos along the path tangent.
+   - Multiple icons can share the same orbit track with different delays.
+   - The icons should not be perfectly symmetrical. Distribution should feel natural.
 
 4. CTA Animation
    - CTA button fades in after the heading and orbit visual.
-   - On hover, button can slightly scale or lift.
-   - Keep the CTA interaction clean and simple.
+   - On hover, the button may slightly lift or scale.
+   - CTA motion should be subtle.
+   - CTA must remain a real clickable HTML link/button, not part of the SVG animation.
+
+### Motion Timing
+
+Suggested timing:
+
+- Heading entrance: 0.5s to 0.8s
+- Orbit line draw/fade: 1.0s to 1.5s
+- Icon orbit loop: 12s to 20s depending on track
+- Stagger icon start positions using negative delays or equivalent offsets
+- Avoid all icons starting from the same side at the same time
+
+### Reduced Motion
+
+If the user prefers reduced motion:
+
+- Disable continuous icon orbit movement.
+- Show icons statically placed on the orbit paths.
+- Keep the orbit lines visible.
+- Keep simple fade-in animation only if already implemented.
+- Do not leave animated infinite movement enabled.
+
+### Mobile Motion
+
+On mobile:
+
+- Reduce visual complexity if needed.
+- Fewer icons visible at once is acceptable.
+- Keep icons large enough to recognize.
+- Maintain the cropped orbit feeling.
+- Avoid fast motion that distracts from the headline and CTA.
 
 ## Implementation Notes
 
 - Do not use the whole hero visual as a static image.
 - Build the section with real text for SEO and accessibility.
-- Use actual icon assets from the design handoff folder.
-- Orbit lines can be implemented using SVG paths or absolutely positioned curved borders.
-- SVG is preferred for clean responsive scaling.
-- The orbit visual should be inside a wrapper with `overflow: hidden` so it can crop cleanly on tablet and mobile.
+- Use actual icon assets from `/public/ai-platform-icons`.
+- Orbit lines should be implemented as SVG paths.
+- The orbit icon animation should be tied to the actual SVG paths.
+- Do not use separate arbitrary absolute icon positions as the main animation system.
+- Do not animate icons with unrelated x/y floating arrays if the goal is orbit movement.
+- The line path and the motion path should share the same geometry or be deliberately reversed versions of the same geometry.
+- Use SVG `<animateMotion>` or a path-based motion approach so logos stay on the orbit tracks.
+- Icons should remain upright while moving. Do not use tangent rotation for logos.
+- The orbit visual should be inside a wrapper with `overflow: hidden` so icons can leave and re-enter the cropped area naturally.
+- Do not use `preserveAspectRatio="none"` on the main orbit SVG because it distorts the orbit geometry.
+- Use an aspect ratio strategy that preserves the orbit shape, such as `preserveAspectRatio="xMidYMid slice"` or an oversized SVG wrapper with controlled cropping.
+- The orbit paths may extend beyond the visible SVG/container bounds so icons can enter and leave naturally.
+- The CTA button should remain an HTML button/link over the visual, not an SVG element.
 - Maintain the dark background color from the Marrai theme.
 - The heading, eyebrow, and CTA should use the existing typography and color tokens.
 - The CTA should use the existing primary button styling.
 - The layout should be responsive using the project’s existing Tailwind/shadcn setup.
-- Avoid hardcoding random pixel values everywhere. Use reusable spacing tokens where possible.
-- Icons should be positioned with responsive classes or CSS variables so they can be adjusted easily.
+- Avoid hardcoding random pixel values everywhere. Use structured orbit track data and reusable values where possible.
 - Mobile should not simply shrink the full desktop orbit. It should crop and recompose the visual so it still feels intentional.
-- Keep the section premium, minimal, and focused. Do not add extra text or extra buttons.
+- Keep the section premium, minimal, and focused.
