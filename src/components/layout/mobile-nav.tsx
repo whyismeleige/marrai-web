@@ -165,7 +165,7 @@ export function MobileNav({ open, onOpenChange }: MobileNavProps) {
                 <Button
                   key={item.label}
                   asChild
-                  className={cn("h-12 rounded-lg text-base sm:h-14")}
+                  className={cn("h-12 rounded-lg sm:h-14")}
                 >
                   <Link href={item.href} onClick={closeMenu}>
                     {item.label}

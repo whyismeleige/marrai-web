@@ -1,3 +1,4 @@
+import { ButtonVariant } from "@/components/ui/button";
 import { Boxes, FileText, LucideIcon, Network, ScanSearch, ShoppingCart } from "lucide-react";
 
 export type ProductNavStatus = "available" | "coming-soon";
@@ -20,7 +21,7 @@ export type ProductNavItem = {
 export type AuthNavItem = {
   label: string;
   href: string;
-  variant: "primary" | "secondary";
+  variant: ButtonVariant;
 };
 
 export const primaryNavItems = [
@@ -84,7 +85,7 @@ export const authNavItems = [
   {
     label: "Join Waitlist",
     href: "#waitlist",
-    variant: "primary",
+    variant: "default",
   },
 ] as const satisfies readonly AuthNavItem[];
 

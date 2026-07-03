@@ -124,8 +124,8 @@ export function SiteHeader() {
               <Button
                 key={item.label}
                 asChild
-                variant={item.variant === "primary" ? "default" : "outline"}
-                className={cn("h-11 rounded-lg px-6 text-body")}
+                variant={item.variant}
+                className={cn("h-11 rounded-lg px-6 ")}
               >
                 <Link href={item.href}>{item.label}</Link>
               </Button>

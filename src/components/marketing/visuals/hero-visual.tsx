@@ -291,7 +291,7 @@ return (
       <Button
         asChild
         size="lg"
-        className="h-10 rounded-lg px-5 text-label shadow-sm sm:h-11 sm:px-6 sm:text-body"
+        className="h-10 rounded-lg px-5 shadow-sm sm:h-11 sm:px-6"
       >
         <Link href="/audit">Get a Free AEO Audit</Link>
       </Button>

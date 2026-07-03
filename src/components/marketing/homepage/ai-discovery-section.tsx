@@ -157,7 +157,7 @@ export function AiDiscoverySection() {
               <Button
                 asChild
                 size="lg"
-                className="h-9 rounded-lg px-5 text-label sm:h-11 sm:px-6 sm:text-body"
+                className="h-9 rounded-lg px-5 sm:h-11 sm:px-6"
               >
                 <Link href="/audit">Run Free AEO Audit</Link>
               </Button>

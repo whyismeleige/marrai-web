@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { MarketingContainer } from "@/components/marketing/primitives/marketing-container"
-import { MarketingSection } from "@/components/marketing/primitives/marketing-section"
+import { Button } from "@/components/ui/button";
+import { MarketingContainer } from "@/components/marketing/primitives/marketing-container";
+import { MarketingSection } from "@/components/marketing/primitives/marketing-section";
 
 export function CtaSection() {
   return (
@@ -45,7 +45,7 @@ export function CtaSection() {
               />
               <Button
                 type="submit"
-                className="h-11 rounded-lg px-5 text-small font-normal sm:h-14 sm:px-8 sm:text-body-lg"
+                className="h-11 rounded-lg px-5 font-normal sm:h-14 sm:px-8 "
               >
                 <span className="hidden sm:inline">Start Free Audit</span>
                 <span className="sm:hidden">Audit</span>
@@ -89,5 +89,5 @@ export function CtaSection() {
         </div>
       </MarketingContainer>
     </MarketingSection>
-  )
+  );
 }

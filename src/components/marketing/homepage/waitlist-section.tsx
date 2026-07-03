@@ -42,7 +42,7 @@ export function WaitlistSection() {
             />
             <Button
               type="submit"
-              className="h-11 rounded-lg px-5 text-small font-normal sm:h-14 sm:px-8 sm:text-body-lg"
+              className="h-11 rounded-lg px-5 font-normal sm:h-14 sm:px-8"
             >
               <span className="hidden sm:inline">Join the Waitlist</span>
               <span className="sm:hidden">Join</span>
