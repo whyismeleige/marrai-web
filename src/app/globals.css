@@ -5,40 +5,42 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.9632 0.0069 219.5603);
-  --foreground: oklch(0.1519 0.0369 261.6675);
-  --card: oklch(0.9828 0.0032 197.1049);
-  --card-foreground: oklch(0.1519 0.0369 261.6675);
-  --popover: oklch(0.9828 0.0032 197.1049);
-  --popover-foreground: oklch(0.1519 0.0369 261.6675);
-  --primary: oklch(0.7650 0.1023 160.6103);
-  --primary-foreground: oklch(0.1519 0.0369 261.6675);
-  --secondary: oklch(0.9231 0.0163 245.0945);
-  --secondary-foreground: oklch(0.4719 0.0554 264.9250);
-  --muted: oklch(0.9379 0.0095 222.0602);
-  --muted-foreground: oklch(0.4719 0.0554 264.9250);
-  --accent: oklch(0.9426 0.0265 163.1860);
-  --accent-foreground: oklch(0.2598 0.0281 223.6066);
-  --destructive: oklch(0.5858 0.2220 17.5846);
-  --destructive-foreground: oklch(0.9911 0 0);
-  --border: oklch(0.8739 0.0213 236.7946);
-  --input: oklch(0.8739 0.0213 236.7946);
-  --ring: oklch(0.7300 0.1164 159.0787);
-  --chart-1: oklch(0.7650 0.1023 160.6103);
-  --chart-2: oklch(0.7137 0.1434 254.6240);
-  --chart-3: oklch(0.4220 0.0580 175.4361);
-  --chart-4: oklch(0.7686 0.1647 70.0804);
-  --chart-5: oklch(0.4719 0.0554 264.9250);
-  --sidebar: oklch(0.9632 0.0069 219.5603);
-  --sidebar-foreground: oklch(0.1519 0.0369 261.6675);
-  --sidebar-primary: oklch(0.7650 0.1023 160.6103);
-  --sidebar-primary-foreground: oklch(0.1519 0.0369 261.6675);
-  --sidebar-accent: oklch(0.9426 0.0265 163.1860);
-  --sidebar-accent-foreground: oklch(0.2598 0.0281 223.6066);
-  --sidebar-border: oklch(0.8739 0.0213 236.7946);
-  --sidebar-ring: oklch(0.7300 0.1164 159.0787);
+  --background: #eef4f6;
+  --foreground: #040b1b;
+  --card: #f7fafa;
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--card-foreground);
+  --primary: #74c79d;
+  --primary-foreground: var(--foreground);
+  --secondary: #dde7f0;
+  --secondary-foreground: #4c5b7b;
+  --muted: #e4ecef;
+  --muted-foreground: #4c5b7b;
+  --accent: #ddf2e7;
+  --accent-foreground: #14272e;
+  --destructive: #e11d48;
+  --destructive-foreground: #fcfcfc;
+  --border: #c9d8e2;
+  --input: var(--border);
+  --ring: #5fbe8d;
+  --chart-1: #74c79d;
+  --chart-2: #60a5fa;
+  --chart-3: #26584c;
+  --chart-4: #f59e0b;
+  --chart-5: #4c5b7b;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-brand: var(--font-poppins), var(--font-inter), ui-sans-serif,
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --radius: 0.625rem;
@@ -61,40 +63,42 @@
 }
 
 .dark {
-  --background: oklch(0.1519 0.0369 261.6675);
-  --foreground: oklch(0.9911 0 0);
-  --card: oklch(0.2150 0.0334 265.6254);
-  --card-foreground: oklch(0.9911 0 0);
-  --popover: oklch(0.2150 0.0334 265.6254);
-  --popover-foreground: oklch(0.9911 0 0);
-  --primary: oklch(0.7650 0.1023 160.6103);
-  --primary-foreground: oklch(0.1519 0.0369 261.6675);
-  --secondary: oklch(0.4719 0.0554 264.9250);
-  --secondary-foreground: oklch(0.9911 0 0);
-  --muted: oklch(0.2265 0.0186 266.1546);
-  --muted-foreground: oklch(0.7077 0.0282 264.3782);
-  --accent: oklch(0.2598 0.0281 223.6066);
-  --accent-foreground: oklch(0.9911 0 0);
-  --destructive: oklch(0.5858 0.2220 17.5846);
-  --destructive-foreground: oklch(0.9911 0 0);
-  --border: oklch(0.2469 0.0549 268.7233);
-  --input: oklch(0.2469 0.0549 268.7233);
-  --ring: oklch(0.7650 0.1023 160.6103);
-  --chart-1: oklch(0.7650 0.1023 160.6103);
-  --chart-2: oklch(0.7137 0.1434 254.6240);
-  --chart-3: oklch(0.6959 0.1491 162.4796);
-  --chart-4: oklch(0.7686 0.1647 70.0804);
-  --chart-5: oklch(0.7107 0.0351 256.7878);
-  --sidebar: oklch(0.1519 0.0369 261.6675);
-  --sidebar-foreground: oklch(0.9911 0 0);
-  --sidebar-primary: oklch(0.7650 0.1023 160.6103);
-  --sidebar-primary-foreground: oklch(0.1519 0.0369 261.6675);
-  --sidebar-accent: oklch(0.2598 0.0281 223.6066);
-  --sidebar-accent-foreground: oklch(0.9911 0 0);
-  --sidebar-border: oklch(0.2469 0.0549 268.7233);
-  --sidebar-ring: oklch(0.7650 0.1023 160.6103);
+  --background: #040b1b;
+  --foreground: #fcfcfc;
+  --card: #121929;
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--card-foreground);
+  --primary: #74c79d;
+  --primary-foreground: var(--background);
+  --secondary: #4c5b7b;
+  --secondary-foreground: var(--foreground);
+  --muted: #181c25;
+  --muted-foreground: #98a1b3;
+  --accent: #14272e;
+  --accent-foreground: var(--foreground);
+  --destructive: #e11d48;
+  --destructive-foreground: var(--foreground);
+  --border: #161f3b;
+  --input: var(--border);
+  --ring: #74c79d;
+  --chart-1: #74c79d;
+  --chart-2: #60a5fa;
+  --chart-3: #10b981;
+  --chart-4: #f59e0b;
+  --chart-5: #94a3b8;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-brand: var(--font-poppins), var(--font-inter), ui-sans-serif,
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --radius: 0.625rem;
@@ -151,12 +155,35 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
 
+  --font-brand: var(--font-poppins), var(--font-inter), ui-sans-serif,
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
-  
-  --font-serif: var(--font-serif);
+
+  --text-display: 3.5rem;
+  --text-display--line-height: 4rem;
+  --text-h1: 2.5rem;
+  --text-h1--line-height: 3rem;
+  --text-h2: 1.75rem;
+  --text-h2--line-height: 2.25rem;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.75rem;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.75rem;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.5rem;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.125rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 0.75rem;
+  --text-label: 0.6875rem;
+  --text-label--line-height: 0.875rem;
+  --text-metric: 2rem;
+  --text-metric--line-height: 2.375rem;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
