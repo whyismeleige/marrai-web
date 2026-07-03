@@ -4,37 +4,36 @@ import Link from "next/link"
 import { motion, useReducedMotion } from "framer-motion"
 
 import { Button } from "@/components/ui/button"
-import { aiPlatforms } from "@/constants/platforms"
+import { aiPlatforms, type AiPlatform } from "@/constants/platforms"
 
 const heroVisualEase = [0.16, 1, 0.3, 1] as const
 
-type PlatformId = (typeof aiPlatforms)[number]["id"]
 type OrbitDirection = "forward" | "reverse"
 
 type OrbitIcon = {
-  platformId: PlatformId
+  platform: AiPlatform
   begin: string
   progress: number
-  size?: number
-  duration?: number
-  card?: boolean
+  size: number
 }
 
-type OrbitTrack = {
+type OrbitTrackBase = {
   id: string
   pathD: string
   opacity: number
   duration: number
   direction: OrbitDirection
   reverseDraw: boolean
+  minIcons: number
+  maxIcons: number
+  sizes: readonly number[]
+}
+
+type OrbitTrack = OrbitTrackBase & {
   icons: readonly OrbitIcon[]
 }
 
-const platformById = new Map(
-  aiPlatforms.map((platform) => [platform.id, platform])
-)
-
-const orbitTracks = [
+const orbitTrackBases = [
   {
     id: "outer",
     pathD:
@@ -43,27 +42,9 @@ const orbitTracks = [
     duration: 17,
     direction: "reverse",
     reverseDraw: false,
-    icons: [
-      {
-        platformId: "google-ai-overviews",
-        begin: "-10.2s",
-        progress: 0.22,
-        size: 52,
-      },
-      {
-        platformId: "chatgpt",
-        begin: "-3.9s",
-        progress: 0.56,
-        size: 52,
-        card: true,
-      },
-      {
-        platformId: "gemini",
-        begin: "-13.7s",
-        progress: 0.88,
-        size: 48,
-      },
-    ],
+    minIcons: 4,
+    maxIcons: 5,
+    sizes: [48, 50, 52],
   },
   {
     id: "second",
@@ -73,26 +54,9 @@ const orbitTracks = [
     duration: 15,
     direction: "forward",
     reverseDraw: true,
-    icons: [
-      {
-        platformId: "gemini",
-        begin: "-11.8s",
-        progress: 0.1,
-        size: 46,
-      },
-      {
-        platformId: "perplexity",
-        begin: "-6.2s",
-        progress: 0.39,
-        size: 48,
-      },
-      {
-        platformId: "microsoft-copilot",
-        begin: "-1.8s",
-        progress: 0.81,
-        size: 48,
-      },
-    ],
+    minIcons: 4,
+    maxIcons: 5,
+    sizes: [46, 48, 50],
   },
   {
     id: "third",
@@ -102,26 +66,9 @@ const orbitTracks = [
     duration: 13,
     direction: "reverse",
     reverseDraw: false,
-    icons: [
-      {
-        platformId: "deepseek",
-        begin: "-8.6s",
-        progress: 0.26,
-        size: 48,
-      },
-      {
-        platformId: "claude",
-        begin: "-3.1s",
-        progress: 0.56,
-        size: 48,
-      },
-      {
-        platformId: "grok",
-        begin: "-11.4s",
-        progress: 0.78,
-        size: 46,
-      },
-    ],
+    minIcons: 3,
+    maxIcons: 4,
+    sizes: [44, 46, 48],
   },
   {
     id: "inner",
@@ -131,57 +78,107 @@ const orbitTracks = [
     duration: 12,
     direction: "forward",
     reverseDraw: true,
-    icons: [
-      {
-        platformId: "google-ai-overviews",
-        begin: "-8.8s",
-        progress: 0.25,
-        size: 50,
-      },
-      {
-        platformId: "chatgpt",
-        begin: "-3.3s",
-        progress: 0.72,
-        size: 52,
-        card: true,
-      },
-    ],
+    minIcons: 2,
+    maxIcons: 3,
+    sizes: [46, 48, 50],
   },
-] as const satisfies readonly OrbitTrack[]
+] as const satisfies readonly OrbitTrackBase[]
+
+function createSeededRandom(seed: number) {
+  return function random() {
+    seed |= 0
+    seed = (seed + 0x6d2b79f5) | 0
+
+    let value = Math.imul(seed ^ (seed >>> 15), 1 | seed)
+    value = (value + Math.imul(value ^ (value >>> 7), 61 | value)) ^ value
+
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+function hashString(value: string) {
+  let hash = 2166136261
+
+  for (let index = 0; index < value.length; index++) {
+    hash ^= value.charCodeAt(index)
+    hash = Math.imul(hash, 16777619)
+  }
+
+  return hash >>> 0
+}
+
+function seededShuffle<T>(items: readonly T[], seed: number) {
+  const random = createSeededRandom(seed)
+  const shuffled = [...items]
+
+  for (let index = shuffled.length - 1; index > 0; index--) {
+    const swapIndex = Math.floor(random() * (index + 1))
+    ;[shuffled[index], shuffled[swapIndex]] = [
+      shuffled[swapIndex],
+      shuffled[index],
+    ]
+  }
+
+  return shuffled
+}
+
+function getRandomIconCount(track: OrbitTrackBase) {
+  const seed = hashString(`${track.id}-${aiPlatforms.length}-count`)
+  const random = createSeededRandom(seed)
+
+  const maxPossibleIcons = Math.min(track.maxIcons, aiPlatforms.length)
+  const minPossibleIcons = Math.min(track.minIcons, maxPossibleIcons)
+
+  return (
+    minPossibleIcons +
+    Math.floor(random() * (maxPossibleIcons - minPossibleIcons + 1))
+  )
+}
+
+function buildOrbitIcons(track: OrbitTrackBase): OrbitIcon[] {
+  const iconCount = getRandomIconCount(track)
+  const seed = hashString(`${track.id}-${aiPlatforms.length}-platforms`)
+  const platforms = seededShuffle(aiPlatforms, seed).slice(0, iconCount)
+
+  return platforms.map((platform, index) => {
+    const progress = index / iconCount
+    const begin = `-${(track.duration * progress).toFixed(2)}s`
+    const size = track.sizes[index % track.sizes.length]
+
+    return {
+      platform,
+      begin,
+      progress,
+      size,
+    }
+  })
+}
+
+const orbitTracks = orbitTrackBases.map((track) => ({
+  ...track,
+  icons: buildOrbitIcons(track),
+})) satisfies readonly OrbitTrack[]
 
 function renderPlatformIcon(icon: OrbitIcon) {
-  const platform = platformById.get(icon.platformId)
-  const size = icon.size ?? 48
-  const imageSize = icon.card ? size - 14 : size
-  const imageOffset = -imageSize / 2
-
-  if (!platform) {
-    return null
-  }
+  const size = icon.size
+  const imageOffset = -size / 2
 
   return (
     <>
-      {icon.card ? (
-        <rect
-          x={-size / 2}
-          y={-size / 2}
-          width={size}
-          height={size}
-          rx="7"
-          className="fill-primary/70 stroke-border"
-          strokeWidth="1"
-        />
-      ) : null}
       <image
-        href={platform.iconSrc}
+        href={icon.platform.iconSrc}
         x={imageOffset}
         y={imageOffset}
-        width={imageSize}
-        height={imageSize}
+        width={size}
+        height={size}
         preserveAspectRatio="xMidYMid meet"
       />
     </>
   )
+}
+
+function getStaticProgress(direction: OrbitDirection, progress: number) {
+  return direction === "reverse" ? 1 - progress : progress
 }
 
 function getKeyPoints(direction: OrbitDirection, progress?: number) {
@@ -233,9 +230,11 @@ export function HeroVisual() {
 
           {orbitTracks.flatMap((track, trackIndex) =>
             track.icons.map((icon, iconIndex) => {
-              const key = `${track.id}-${icon.platformId}-${iconIndex}`
-              const iconDuration =
-                "duration" in icon ? icon.duration : track.duration
+              const key = `${track.id}-${icon.platform.id}-${iconIndex}`
+              const staticProgress = getStaticProgress(
+                track.direction,
+                icon.progress
+              )
 
               return (
                 <motion.g
@@ -251,18 +250,19 @@ export function HeroVisual() {
                   }}
                 >
                   <animateMotion
-                    dur={shouldReduceMotion ? "1ms" : `${iconDuration}s`}
+                    dur={shouldReduceMotion ? "1ms" : `${track.duration}s`}
                     begin={shouldReduceMotion ? "0s" : icon.begin}
                     repeatCount={shouldReduceMotion ? "1" : "indefinite"}
                     fill={shouldReduceMotion ? "freeze" : undefined}
                     calcMode="linear"
                     keyPoints={getKeyPoints(
                       track.direction,
-                      shouldReduceMotion ? icon.progress : undefined
+                      shouldReduceMotion ? staticProgress : undefined
                     )}
                     keyTimes="0;1"
                     path={track.pathD}
                   />
+
                   {renderPlatformIcon(icon)}
                 </motion.g>
               )
